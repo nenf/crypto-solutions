@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 from os import path
-from task6 import split_nth_chars
+from task1 import split_nth_chars
 
 
 def is_repeat_blocks(ct):

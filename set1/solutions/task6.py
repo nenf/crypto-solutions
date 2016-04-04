@@ -2,15 +2,11 @@
 # -*- coding: utf-8 -*-
 from os import path
 from string import printable
-from itertools import cycle, izip
+from task5 import xor_repeat_key
 
 frequency = {"a": 834, "b": 154, "c": 273, "d": 414, "e": 1260, "f": 203, "g": 192, "h": 611, "i": 671, "j": 23,
              "k": 87, "l": 424, "m": 253, "n": 680, "o": 770, "p": 166, "q": 9, "r": 568, "s": 611, "t": 937, "u": 285,
              "v": 106, "w": 234, "x": 20, "y": 204, "z": 6, " ": 2320}
-
-
-def split_nth_chars(string, size_block):
-    return [string[i:i + size_block] for i in range(0, len(string), size_block)]
 
 
 def score(text):
@@ -78,7 +74,4 @@ if __name__ == "__main__":
     key = "".join([single_xor_decode(d, len(d)) for d in split_data])
     print "Key is: {0}\n".format(key)
 
-    data_hex = split_nth_chars(data.encode("hex"), 2)
-    key_hex = split_nth_chars(key.encode("hex"), 2)
-
-    print "".join([chr(int(b1, 16) ^ int(b2, 16)) for b1, b2 in izip(data_hex, cycle(key_hex))])
+    print xor_repeat_key(data, key)
