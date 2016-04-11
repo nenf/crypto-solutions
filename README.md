@@ -34,3 +34,7 @@ Solutions:
 5. [Byte-at-a-time ECB decryption (Simple)](set2/solutions/task5.py)
 6. [ECB cut-and-paste](set2/solutions/task6.py)
 7. [Byte-at-a-time ECB decryption (Harder)](set2/solutions/task7.py)
+
+### set 5:
+1. [Implement FCSR generator](set5/solutions/gamma_generator.py)
+2. [Frequency Test within a Block](set5/solutions/frequency_analysis.py)
