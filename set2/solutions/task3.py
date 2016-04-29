@@ -67,27 +67,16 @@ def strip_data(data, regexp):
     return sub(regexp, "", data)
 
 
-def change_role(plain_text, user_data, encrypted_data, aes, iv):
-    user_data_block_number = (plain_text.find(user_data) / AESCipher.block_size)
-    brute_block_number = user_data_block_number - 1
-
-    plain_text_blocks = split_nth_chars(plain_text, AESCipher.block_size)
-    encrypted_data_blocks = split_nth_chars(encrypted_data, AESCipher.block_size)
-
-    brute_block = encrypted_data_blocks[brute_block_number]
-    index_brute = plain_text_blocks[user_data_block_number].find("^")
-
-    suffix_encrypt = "".join(data for data in encrypted_data_blocks[:brute_block_number])
-    prefix_encrypt = "".join(data for data in encrypted_data_blocks[brute_block_number + 1:])
-
+def change_role(plain_text, encrypted_data, aes, iv):
+    index_brute = plain_text.find("^") - AESCipher.block_size
     for byte in range(256):
-        attack_block = brute_block[:index_brute] + chr(byte) + brute_block[index_brute + 1:]
-        attack_encrypted_data = suffix_encrypt + attack_block + prefix_encrypt
+        attack_encrypted_data = encrypted_data[:index_brute] + chr(byte) + encrypted_data[index_brute + 1:]
         attack_plain_text = aes.cbc_decrypt(attack_encrypted_data, iv)
         if search(r"admin=true", attack_plain_text):
             print attack_plain_text
             return True
     return False
+
 
 if __name__ == "__main__":
     key = "YELLOW SUBMARINE"
@@ -107,4 +96,4 @@ if __name__ == "__main__":
     print "Result decrypt function: {0}\n".format(decrypted_data)
 
     print "Changing encrypted data..."
-    change_role(plain_text, user_data, encrypted_data, aes, iv)
+    change_role(plain_text, encrypted_data, aes, iv)
