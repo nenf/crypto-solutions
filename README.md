@@ -38,3 +38,9 @@ Solutions:
 ### set 5:
 1. [Implement FCSR generator](set5/solutions/gamma_generator.py)
 2. [Frequency Test within a Block](set5/solutions/frequency_analysis.py)
+
+### set 6:
+1. [Fermat's factorization method](set6/solutions/task1.py)
+2. [Wiener's attack](set6/solutions/task2.py)
+3. [RSA cycle attack](set6/solutions/task3.py)
+4. [RSA simple factorization](set6/solutions/task4.py)
